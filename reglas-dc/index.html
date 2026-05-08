@@ -9,26 +9,78 @@
     <style>
         :root { --bg: #090b11; --side: #11141d; --acc: #7e22ce; --txt: #f5f5f5; --dim: #9ca3af; --brd: rgba(168,85,247,0.15); }
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat',sans-serif; -webkit-tap-highlight-color: transparent; }
+        
         body { background: var(--bg); color: var(--txt); display: flex; min-height: 100vh; overflow-x: hidden; }
+
+        /* SIDEBAR */
         .sidebar { width: 280px; background: var(--side); border-right: 1px solid var(--brd); height: 100vh; position: fixed; padding: 25px; overflow-y: auto; z-index: 100; }
         .sidebar-header { display: flex; align-items: center; gap: 12px; padding-bottom: 25px; border-bottom: 1px solid var(--brd); margin-bottom: 20px; }
         .sidebar-logo { width: 35px; }
         .sidebar-title { font-weight: 800; font-size: 16px; letter-spacing: 1px; }
+        
         .nav-group { margin-bottom: 25px; }
         .nav-label { font-size: 11px; font-weight: 800; color: var(--dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: block; }
+        
         .nav-link { display: block; padding: 10px 12px; color: var(--txt); text-decoration: none; font-size: 14px; border-radius: 8px; margin-bottom: 4px; transition: 0.2s; }
         .nav-link:hover, .nav-link.active { background: rgba(126, 34, 206, 0.15); color: #c084fc; font-weight: 600; }
+
+        /* MAIN CONTENT */
         .main { flex: 1; margin-left: 280px; padding: 40px; display: flex; justify-content: center; position: relative; z-index: 10; }
         .container { max-width: 850px; width: 100%; }
-        .banner { width: 100%; height: 280px; background: linear-gradient(rgba(12,12,18,0.1), var(--bg)), url('/banner-dc.png'); background-size: cover; background-position: center; border-radius: 20px; margin-bottom: 40px; border: 1px solid var(--brd); }
-        h1 { font-size: 38px; font-weight: 800; margin-bottom: 20px; }
-        .rule-card { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border-left: 3px solid var(--acc); margin-bottom: 12px; font-size: 15px; }
-        .rule-card strong { color: #fcd34d; margin-right: 8px; font-size: 18px; }
-        .info-green { background: rgba(34, 197, 94, 0.05); border-left: 5px solid #22c55e; padding: 20px; border-radius: 12px; margin-top: 30px; }
-        @media (max-width: 900px) { .sidebar { width: 100%; height: auto; position: relative; border-right: none; } body { flex-direction: column; } .main { margin-left: 0; padding: 20px; } }
+        
+        /* BANNER DINÁMICO */
+        .banner { 
+            width: 100%; 
+            height: 280px; 
+            background: linear-gradient(rgba(12,12,18,0.1), var(--bg)), url('/banner-dc.png'); 
+            background-size: cover; 
+            background-position: center; 
+            border-radius: 20px; 
+            margin-bottom: 40px; 
+            border: 1px solid var(--brd); 
+        }
+
+        h1 { font-size: 38px; font-weight: 800; margin-bottom: 20px; color: #fff; }
+        
+        .wiki-content { line-height: 1.8; font-size: 16px; }
+        .wiki-content p { margin-bottom: 20px; color: #e2e2e2; }
+        .wiki-content h2 { margin: 40px 0 20px; color: #d8b4fe; border-bottom: 1px solid var(--brd); padding-bottom: 10px; font-size: 24px; }
+
+        /* CAJAS DE REGLAS (ESTILO DISCORD) */
+        .rule-card { 
+            background: rgba(255,255,255,0.03); 
+            padding: 18px; 
+            border-radius: 12px; 
+            border-left: 4px solid var(--acc); 
+            margin-bottom: 12px; 
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .rule-card strong { color: #fcd34d; font-size: 20px; min-width: 25px; }
+
+        /* INFO EXTRA (VERDE) */
+        .info-extra { 
+            background: rgba(34, 197, 94, 0.05); 
+            border: 1px solid rgba(34, 197, 94, 0.2); 
+            padding: 25px; 
+            border-radius: 15px; 
+            margin-top: 50px; 
+            border-left: 6px solid #22c55e;
+        }
+        .info-extra h3 { color: #4ade80; margin-bottom: 15px; font-weight: 800; letter-spacing: 1px; }
+        .info-extra p { margin-bottom: 10px; font-size: 15px; }
+
+        @media (max-width: 900px) {
+            .sidebar { width: 100%; height: auto; position: relative; border-right: none; }
+            body { flex-direction: column; }
+            .main { margin-left: 0; padding: 20px; }
+            .banner { height: 180px; }
+        }
     </style>
 </head>
 <body>
+
     <div class="sidebar">
         <div class="sidebar-header">
             <img src="/logo.png" class="sidebar-logo">
@@ -48,20 +100,43 @@
             <a href="/requisitos/" class="nav-link">Requisitos Staff</a>
         </div>
     </div>
+
     <div class="main">
         <div class="container">
             <div class="banner"></div>
+            
             <h1>💬 Reglas Discord</h1>
+            
             <div class="wiki-content">
-                <p><em>No ser consciente de estas normas no justifica su incumplimiento.</em></p>
-                <div class="rule-card"><strong>1.</strong> No se permite insultar, molestar o discriminar a otros usuarios.</div>
-                <div class="rule-card"><strong>2.</strong> Prohibido el uso de nombres o avatares inapropiados.</div>
-                <div class="rule-card"><strong>3.</strong> Prohibido cualquier tipo de spam o flood.</div>
-                <div class="rule-card"><strong>4.</strong> Prohibido el contenido NSFW/+18 o malicioso.</div>
-                <div class="rule-card"><strong>5.</strong> No se tolera el acoso o toxicidad hacia miembros o staff.</div>
-                <div class="info-green">🍃 <strong>INFO EXTRA:</strong> Reporta cualquier incidente abriendo un ticket o contactando a un <strong>@AYUDANTE</strong>.</div>
+                <p><em>Leer las normas es algo obligatorio. No ser consciente de ellas no justifica su incumplimiento. Las reglas se aplican al servidor y mensajes directos.</em></p>
+
+                <p>El equipo de moderación está autorizado para la toma de medidas ante acciones que lo requieran, estén o no explícitamente incluidas aquí.</p>
+
+                <h2>Reglas Generales</h2>
+                <div class="rule-card"><strong>1.</strong> No Se Permite Insultar, molestar, discriminar, faltar el respeto a los usuarios.</div>
+                <div class="rule-card"><strong>2.</strong> No Está Permitido Contener nombre y/o avatar <strong>inapropiado</strong> (símbolos nazis, foto explícitas, etc.)</div>
+                <div class="rule-card"><strong>3.</strong> No Está Permitido Contener nombres <strong>intagueables</strong>.</div>
+                <div class="rule-card"><strong>4.</strong> No Está Permitido cualquier tipo de spam (redes sociales, plataformas de contenido, servidores de Discord, Minecraft, etc.) dentro y fuera del servidor.</div>
+                <div class="rule-card"><strong>5.</strong> No esta permitido publicar cualquier tipo de contenido delicado, sugestivo, malicioso, NSFW o +18 (mensajes, fotos, nicks, vídeos, etc).</div>
+                <div class="rule-card"><strong>6.</strong> No se va a tolerar el acoso, el hostigamiento o la toxicidad a usuarios, staffs, streamers u otras comunidades.</div>
+                <div class="rule-card"><strong>7.</strong> Esta prohibido evadir sanciones (mediante bugs, saliendo del servidor o con el uso de multicuentas). Solo se va a permitir tener otra cuenta en el servidor para apelar un baneo.</div>
+
+                <h2>Reglas Canales de Voz</h2>
+                <div class="rule-card"><strong>1.</strong> Saturación, gritos, soplos, reproducción de sonidos, poner música que no sea de los bots (todo a través del micrófono y con el fin de molestar).</div>
+                <div class="rule-card"><strong>2.</strong> El uso de <strong>modulador de voz</strong>, SoundPad y aplicaciones similares con el fin de molestar.</div>
+                <div class="rule-card"><strong>3.</strong> Trasmitir <strong>chat privados</strong> de cualquier red social.</div>
+                <div class="rule-card"><strong>4.</strong> Trasmitir aplicaciones como: <strong>Omegle, Tinder</strong> (o similares); <strong>Twitter</strong>; contenido con <strong>derechos de autor</strong> (Netflix, Prime Video, HBO, Deportes, etc.)</div>
+                <div class="rule-card"><strong>5.</strong> Trasmitir contenido <strong>NSFW</strong>.</div>
+                <div class="rule-card"><strong>6.</strong> Mostrar cualquier tipo de <strong>elemento ilegal</strong> mediante la cámara (drogas, armas, etc.)</div>
+
+                <div class="info-extra">
+                    <h3>🍃 INFO EXTRA</h3>
+                    <p>• Podes hacer tus reportes con un <strong>@: AYUDANTE</strong> o abre un ticket de soporte y los Staff te ayudamos.</p>
+                    <p>• Si estás sufriendo <strong>acoso</strong> por parte de algún usuario, repórtalo intentando incluir pruebas de ello (como capturas de pantalla, etc.)</p>
+                </div>
             </div>
         </div>
     </div>
+
 </body>
 </html>
