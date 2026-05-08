@@ -10,15 +10,15 @@
         :root { 
             --bg: #090b11; --side: #11141d; --acc: #7e22ce; --txt: #f5f5f5; 
             --dim: #9ca3af; --brd: rgba(168,85,247,0.15); 
-            --glow: rgba(147, 51, 234, 0.5);
-            --sidebar-width: 280px; --sidebar-collapsed: 85px;
+            --glow: rgba(147, 51, 234, 0.4);
             --yellow: #fcd34d;
+            --sidebar-width: 280px; --sidebar-collapsed: 85px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat',sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--txt); display: flex; min-height: 100vh; overflow-x: hidden; transition: margin-left 0.3s ease; }
 
-        /* SIDEBAR ESTRUCTURA */
+        /* SIDEBAR */
         .sidebar { 
             width: var(--sidebar-width); background: var(--side); border-right: 1px solid var(--brd); 
             height: 100vh; position: fixed; left: 0; top: 0; 
@@ -52,15 +52,15 @@
         .nav-label { font-size: 10px; font-weight: 800; color: var(--dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: block; }
         .nav-link { display: flex; align-items: center; padding: 12px 15px; color: var(--txt); text-decoration: none; font-size: 14px; border-radius: 10px; margin-bottom: 6px; transition: all 0.2s ease; }
         .nav-link:hover, .nav-link.active { background: rgba(126, 34, 206, 0.15); color: #c084fc; font-weight: 600; }
-        .nav-icon { margin-right: 12px; display: flex; align-items: center; }
-        .nav-icon svg { fill: currentColor; width: 22px; height: 22px; }
+        .nav-icon { margin-right: 12px; display: flex; align-items: center; color: inherit; }
+        .nav-icon svg { fill: currentColor; width: 20px; height: 20px; }
 
         /* CONTENIDO PRINCIPAL */
         .main { flex: 1; margin-left: var(--sidebar-width); padding: 40px; transition: margin-left 0.3s ease; display: flex; justify-content: center; }
         body.sidebar-collapsed .main { margin-left: var(--sidebar-collapsed); }
         .container { max-width: 900px; width: 100%; }
 
-        /* BANNER (AJUSTE contain) */
+        /* BANNER (ARRIBA) */
         .banner { 
             width: 100%; height: 280px; 
             background: url('/banner-mc.png'); 
@@ -69,24 +69,23 @@
         }
 
         h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 800; margin-bottom: 25px; color: #fff; text-align: center; }
-        
-        .alert-box { background: rgba(245, 158, 11, 0.05); border: 1px solid #f59e0b; padding: 25px; border-radius: 12px; margin-bottom: 35px; font-size: 15px; line-height: 1.6; }
-        .alert-box strong { color: #f59e0b; }
+        h2 { margin: 40px 0 15px; color: #fff; font-size: 22px; border-bottom: 1px solid var(--brd); padding-bottom: 10px; }
 
-        /* REGLAS INTERACTIVAS */
+        /* REGLAS CON EFECTO HOVER */
         .rule-item { 
             padding: 12px 15px; border-radius: 10px; border: 1px solid transparent; 
             transition: all 0.3s ease; margin-bottom: 5px; line-height: 1.6; cursor: default;
         }
         .rule-item:hover { 
             background: rgba(126, 34, 206, 0.08); border-color: var(--acc); 
-            box-shadow: 0 0 15px rgba(147, 51, 234, 0.2); transform: translateX(8px);
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.3); transform: translateX(8px);
         }
         .rule-num { color: var(--yellow); font-weight: 800; margin-right: 8px; }
+        .arrow { color: var(--acc); margin-right: 10px; font-weight: 800; }
 
+        .alert-box { background: rgba(245, 158, 11, 0.05); border: 1px solid #f59e0b; padding: 25px; border-radius: 12px; margin-bottom: 35px; font-size: 15px; }
         .info-extra { background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.2); padding: 25px; border-radius: 15px; margin-top: 50px; border-left: 6px solid #22c55e; }
         .info-extra h3 { color: #4ade80; margin-bottom: 15px; font-weight: 800; }
-
         .footer-txt { text-align: center; margin-top: 50px; font-weight: 700; color: #d8b4fe; font-size: 18px; }
 
         @media (max-width: 850px) {
@@ -162,6 +161,8 @@
             </div>
             
             <div class="wiki-content">
+                <p><span class="arrow">➤</span> Leer las normas es algo obligatorio. No ser consciente de ellas no justifica su incumplimiento.</p>
+
                 <div class="rule-item"><span class="rule-num">1.</span> Respetar a todos los usuarios y miembros del staff por igual.</div>
                 <div class="rule-item"><span class="rule-num">2.</span> Prohibido el uso de hacks, clientes modificados o cualquier ventaja externa.</div>
                 <div class="rule-item"><span class="rule-num">3.</span> Prohibido el Griefing o robo en propiedades ajenas o protegidas.</div>
