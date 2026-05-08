@@ -2,63 +2,251 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Info | Kubeon Network</title>
     <link rel="icon" type="image/png" href="/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #090b11; --side: #11141d; --acc: #7e22ce; --txt: #f5f5f5; --dim: #9ca3af; --brd: rgba(168,85,247,0.15); }
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat',sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--txt); display: flex; min-height: 100vh; overflow-x: hidden; }
-        .sidebar { width: 280px; background: var(--side); border-right: 1px solid var(--brd); height: 100vh; position: fixed; padding: 25px; overflow-y: auto; z-index: 100; }
-        .sidebar-header { display: flex; align-items: center; gap: 12px; padding-bottom: 25px; border-bottom: 1px solid var(--brd); margin-bottom: 20px; }
+        :root { 
+            --bg: #090b11; 
+            --side: #11141d; 
+            --acc: #7e22ce; 
+            --txt: #f5f5f5; 
+            --dim: #9ca3af; 
+            --brd: rgba(168,85,247,0.15); 
+            --glow: rgba(147, 51, 234, 0.4);
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Montserrat', sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--txt); 
+            display: flex; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
+
+        /* SIDEBAR RESPONSIVO */
+        .sidebar { 
+            width: 280px; 
+            background: var(--side); 
+            border-right: 1px solid var(--brd); 
+            height: 100vh; 
+            position: fixed; 
+            padding: 25px; 
+            overflow-y: auto; 
+            z-index: 100; 
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding-bottom: 25px; 
+            border-bottom: 1px solid var(--brd); 
+            margin-bottom: 20px; 
+        }
+
         .sidebar-logo { width: 35px; }
         .sidebar-title { font-weight: 800; font-size: 16px; letter-spacing: 1px; }
+        
         .nav-group { margin-bottom: 25px; }
-        .nav-label { font-size: 11px; font-weight: 800; color: var(--dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: block; }
-        .nav-link { display: block; padding: 10px 12px; color: var(--txt); text-decoration: none; font-size: 14px; border-radius: 8px; margin-bottom: 4px; transition: 0.2s; }
-        .nav-link:hover, .nav-link.active { background: rgba(126, 34, 206, 0.15); color: #c084fc; font-weight: 600; }
-        .main { flex: 1; margin-left: 280px; padding: 40px; display: flex; justify-content: center; position: relative; z-index: 10; }
-        .container { max-width: 850px; width: 100%; }
-        .banner { width: 100%; height: 280px; background: linear-gradient(rgba(12,12,18,0.1), var(--bg)), url('/banner.png'); background-size: cover; background-position: center; border-radius: 20px; margin-bottom: 40px; border: 1px solid var(--brd); }
-        h1 { font-size: 38px; font-weight: 800; margin-bottom: 20px; }
+        .nav-label { 
+            font-size: 11px; 
+            font-weight: 800; 
+            color: var(--dim); 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            margin-bottom: 10px; 
+            display: block; 
+        }
+        
+        .nav-link { 
+            display: block; 
+            padding: 12px; 
+            color: var(--txt); 
+            text-decoration: none; 
+            font-size: 14px; 
+            border-radius: 8px; 
+            margin-bottom: 4px; 
+            transition: all 0.2s ease; 
+        }
+
+        .nav-link:hover, .nav-link.active { 
+            background: rgba(126, 34, 206, 0.15); 
+            color: #c084fc; 
+            font-weight: 600; 
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        .main { 
+            flex: 1; 
+            margin-left: 280px; 
+            padding: 40px; 
+            display: flex; 
+            justify-content: center; 
+            position: relative; 
+            z-index: 10; 
+        }
+
+        .container { max-width: 900px; width: 100%; }
+        
+        .banner { 
+            width: 100%; 
+            height: 320px; 
+            background: linear-gradient(rgba(12,12,18,0.2), var(--bg)), url('/banner.png'); 
+            background-size: cover; 
+            background-position: center; 
+            border-radius: 24px; 
+            margin-bottom: 40px; 
+            border: 1px solid var(--brd); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 800; margin-bottom: 25px; color: #fff; }
+        h2 { font-size: 24px; font-weight: 700; margin: 40px 0 20px; color: #d8b4fe; }
+
         .wiki-content { line-height: 1.8; font-size: 16px; }
         .wiki-content p { margin-bottom: 20px; color: #e2e2e2; }
         .wiki-content strong { color: #d8b4fe; }
-        .rank-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 20px 0; }
-        .rank-card { background: rgba(168, 85, 247, 0.08); border: 1px solid var(--brd); padding: 12px; border-radius: 10px; text-align: center; font-weight: 800; color: #d8b4fe; font-size: 13px; letter-spacing: 1px; }
-        .alert { background: rgba(126,34,206,0.1); border-left: 4px solid var(--acc); padding: 20px; border-radius: 0 12px 12px 0; margin: 30px 0; }
-        @media (max-width: 900px) { .sidebar { width: 100%; height: auto; position: relative; border-right: none; } body { flex-direction: column; } .main { margin-left: 0; padding: 20px; } }
+
+        /* GRILLA DE RANGOS CON ILUMINACIÓN */
+        .rank-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+            gap: 15px; 
+            margin: 30px 0; 
+        }
+
+        .rank-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid var(--brd); 
+            padding: 20px; 
+            border-radius: 16px; 
+            text-align: center; 
+            font-weight: 800; 
+            color: #f5f5f5; 
+            font-size: 14px; 
+            letter-spacing: 1.5px; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+        }
+
+        /* EFECTO DE ILUMINACIÓN (MOUSE) */
+        .rank-card:hover { 
+            transform: translateY(-5px);
+            background: rgba(126, 34, 206, 0.2);
+            border-color: #a855f7;
+            box-shadow: 0 0 25px var(--glow);
+            color: #fff;
+        }
+
+        .feature-box {
+            background: rgba(168, 85, 247, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid var(--brd);
+        }
+
+        .alert { 
+            background: rgba(126,34,206,0.1); 
+            border-left: 5px solid var(--acc); 
+            padding: 25px; 
+            border-radius: 0 15px 15px 0; 
+            margin: 40px 0; 
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* MEDIA QUERIES PARA MÓVIL Y TABLET */
+        @media (max-width: 1024px) {
+            .sidebar { width: 240px; padding: 20px; }
+            .main { margin-left: 240px; padding: 30px; }
+        }
+
+        @media (max-width: 850px) {
+            body { flex-direction: column; }
+            .sidebar { 
+                width: 100%; 
+                height: auto; 
+                position: relative; 
+                border-right: none; 
+                border-bottom: 1px solid var(--brd); 
+                padding: 15px 20px;
+            }
+            .sidebar-header { padding-bottom: 15px; margin-bottom: 15px; }
+            .main { margin-left: 0; padding: 20px; }
+            .banner { height: 200px; margin-bottom: 30px; }
+            .nav-group { margin-bottom: 15px; }
+            .rank-list { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .rank-list { grid-template-columns: 1fr; }
+            h1 { font-size: 28px; }
+            .main { padding: 15px; }
+            .feature-box { padding: 20px; }
+        }
     </style>
 </head>
 <body>
+
     <div class="sidebar">
         <div class="sidebar-header">
             <img src="/logo.png" class="sidebar-logo">
-            <span class="sidebar-title">KUBEON</span>
+            <span class="sidebar-title">KUBEON NETWORK</span>
         </div>
+
         <div class="nav-group">
             <span class="nav-label">General</span>
             <a href="/" class="nav-link active">Bienvenid@</a>
         </div>
+
         <div class="nav-group">
             <span class="nav-label">Normativas Kubeon</span>
             <a href="/reglas-mc/" class="nav-link">Reglas Minecraft</a>
             <a href="/reglas-dc/" class="nav-link">Reglas Discord</a>
         </div>
+
         <div class="nav-group">
             <span class="nav-label">Postulaciones</span>
             <a href="/requisitos/" class="nav-link">Requisitos</a>
         </div>
     </div>
+
     <div class="main">
         <div class="container">
             <div class="banner"></div>
-            <h1>🌍 Bienvenid@ a Kubeon Network</h1>
+            
+            <h1>🌍 Bienvenido a Kubeon Network</h1>
+            
             <div class="wiki-content">
-                <p>¡Nos alegra darte la bienvenida a <strong>Kubeon Network</strong>! Somos una comunidad hispanohablante enfocada en brindar la mejor experiencia técnica y divertida para los jugadores.</p>
-                <p>Nuestra modalidad principal es el <strong>Survival Custom</strong>, un mundo único diseñado para desafiar tus habilidades. Contamos con <strong>encantamientos personalizados</strong> exclusivos, misiones diarias y un sistema de economía balanceado.</p>
-                <p>En nuestra tienda oficial puedes apoyar al servidor adquiriendo rangos con beneficios únicos:</p>
+                <p>¡Nos entusiasma recibirte en la fuente oficial de información de <strong>Kubeon Network</strong>! Somos una comunidad apasionada dedicada a ofrecer una experiencia técnica y de supervivencia inigualable.</p>
+                
+                <div class="feature-box">
+                    <h2>🔥 Nuestra Modalidad: Survival Custom</h2>
+                    <p>En Kubeon, no jugamos al Minecraft tradicional. Hemos reinventado la experiencia Survival para ofrecerte retos constantes:</p>
+                    <ul style="list-style: none; margin-left: 10px;">
+                        <li>✨ <strong>Encantamientos Custom:</strong> Descubre más de 50 nuevos efectos para tus armas y armaduras.</li>
+                        <li>📅 <strong>Misiones Diarias:</strong> Completa objetivos cada 24 horas para obtener recompensas exclusivas.</li>
+                        <li>💰 <strong>Economía Balanceada:</strong> Un sistema de mercado diseñado para que el comercio entre jugadores sea la clave del éxito.</li>
+                        <li>🛡️ <strong>Protecciones Avanzadas:</strong> Tus construcciones están 100% seguras con nuestro sistema de claims.</li>
+                    </ul>
+                </div>
+
+                <h2>💎 Rangos y Apoyo al Servidor</h2>
+                <p>El servidor se mantiene gracias a los jugadores que deciden apoyarnos a través de nuestra tienda. Al adquirir un rango, no solo obtienes beneficios geniales, sino que aseguras que podamos seguir mejorando el hardware y contenido.</p>
+                
+                <p style="font-size: 14px; color: var(--dim); margin-bottom: 10px;">Pasa el mouse sobre los rangos para ver su brillo:</p>
                 <div class="rank-list">
                     <div class="rank-card">ELITE</div>
                     <div class="rank-card">ULTIMATE</div>
@@ -66,11 +254,16 @@
                     <div class="rank-card">OMEGA</div>
                     <div class="rank-card">AERION</div>
                 </div>
+
+                <h2>🤝 Comunidad y Soporte</h2>
+                <p>Nuestro equipo de Staff está disponible para ayudarte en todo momento. Creemos en una comunidad justa, libre de toxicidad y llena de respeto mutuo. Si tienes cualquier duda, nuestro Discord es el lugar perfecto para resolverla.</p>
+
                 <div class="alert">
-                    🌟 Prepárate para la aventura… tu próxima historia comienza aquí. <strong>¡Buena suerte y diviértete!</strong>
+                    🌟 <strong>Tu aventura comienza hoy. ¡Prepárate para demostrar de qué estás hecho en Kubeon Network!</strong>
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 </html>
