@@ -1,1 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki | Kubeon Network</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090b11;
+            --sidebar-bg: #11141d;
+            --accent: #7e22ce;
+            --accent-hover: #9333ea;
+            --text-main: #f5f5f5;
+            --text-dim: #9ca3af;
+            --border: rgba(168, 85, 247, 0.2);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-logo {
+            width: 40px;
+        }
+
+        .sidebar-title {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .nav-group {
+            margin-bottom: 25px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 10px 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(126, 34, 206, 0.15);
+            color: var(--accent-hover);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            max-width: 1100px;
+        }
+
+        .banner {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(rgba(126, 34, 206, 0.2), rgba(9, 11, 17, 0.9)), url('https://i.imgur.com/your-minecraft-screenshot.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .content-header {
+            margin-bottom: 30px;
+        }
+
+        .content-header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .wiki-text {
+            line-height: 1.8;
+            font-size: 16px;
+            color: var(--text-main);
+        }
+
+        .wiki-text p {
+            margin-bottom: 20px;
+        }
+
+        .wiki-text strong {
+            color: var(--accent-hover);
+        }
+
+        .alert {
+            background: rgba(126, 34, 206, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 30px 0;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 100;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .banner {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="logo.png" class="sidebar-logo">
+            <span class="sidebar-title">KUBEON</span>
+        </div>
+
+        <div class="nav-group">
+            <span class="nav-label">Bienvenid@</span>
+            <a href="#" class="nav-link active">Bienvenid@ a Kubeon</a>
+        </div>
+
+        <div class="nav-group">
+            <span class="nav-label">Información</span>
+            <a href="#reglas-server" class="nav-link">Normas Principales</a>
+            <a href="#reglas-discord" class="nav-link">Normas Discord</a>
+        </div>
+
+        <div class="nav-group">
+            <span class="nav-label">Tutoriales</span>
+            <a href="#" class="nav-link">Cómo entrar (IP)</a>
+            <a href="#" class="nav-link">Survival</a>
+            <a href="#" class="nav-link">Rangos y Tienda</a>
+        </div>
+
+        <div class="nav-group">
+            <span class="nav-label">Otros</span>
+            <a href="#requisitos" class="nav-link">Requisitos Info</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="banner"></div>
+
+        <div class="content-header">
+            <h1>🌍 Bienvenid@ a Kubeon Network</h1>
+            <p style="color: var(--text-dim); font-weight: 500;">¡Nos alegra darte la bienvenida a Kubeon!</p>
+        </div>
+
+        <div class="wiki-text">
+            <p>
+                Somos una network <strong>Kubeon Network</strong> enfocada en brindar la mejor experiencia técnica y divertida para los jugadores. Contamos con modalidades estables, eventos únicos y un soporte dedicado para que disfrutes de una comunidad sana y con futuro.
+            </p>
+
+            <p>
+                En este sitio encontrarás todo lo necesario para empezar: <strong>reglas de convivencia</strong>, consejos útiles y tutoriales paso a paso para cada modalidad. Respetar las normas es clave para mantener un ambiente justo y amigable.
+            </p>
+
+            <div class="alert">
+                🌟 Prepárate para la aventura… tu próxima historia comienza aquí. <strong>¡Buena suerte y diviértete!</strong>
+            </div>
+
+            <h2 id="reglas-server" style="margin: 40px 0 20px 0; font-weight: 800;">⚖️ Normas del Servidor</h2>
+            <p>1. Prohibido el uso de hacks o clientes modificados que den ventaja.</p>
+            <p>2. Respetar a todos los miembros del staff y jugadores.</p>
+            <p>3. No hacer spam ni flood en el chat global.</p>
+
+            <h2 id="reglas-discord" style="margin: 40px 0 20px 0; font-weight: 800;">💬 Normas de Discord</h2>
+            <p>1. Mantener un lenguaje respetuoso en los canales de voz y texto.</p>
+            <p>2. No publicar contenido inapropiado o enlaces sospechosos.</p>
+
+            <h2 id="requisitos" style="margin: 40px 0 20px 0; font-weight: 800;">📋 Requisitos Info</h2>
+            <p>Para postularte a Staff o ser creador de contenido, debes cumplir:</p>
+            <ul>
+                <li style="margin-left: 20px; margin-bottom: 10px;">Edad mínima: 14 años.</li>
+                <li style="margin-left: 20px; margin-bottom: 10px;">Tener cuenta de Discord vinculada.</li>
+                <li style="margin-left: 20px; margin-bottom: 10px;">No tener sanciones graves previas.</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
