@@ -18,61 +18,36 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--txt); display: flex; min-height: 100vh; overflow-x: hidden; transition: margin-left 0.3s ease; }
 
-        /* SIDEBAR CON FLEXBOX PARA MANDAR EL BOTÓN ABAJO */
+        /* SIDEBAR DINÁMICO */
         .sidebar { 
-            width: var(--sidebar-width); 
-            background: var(--side); 
-            border-right: 1px solid var(--brd); 
-            height: 100vh; 
-            position: fixed; 
-            left: 0; 
-            top: 0; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Empuja el contenido hacia arriba y abajo */
-            z-index: 1000; 
-            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: var(--sidebar-width); background: var(--side); border-right: 1px solid var(--brd); 
+            height: 100vh; position: fixed; left: 0; top: 0; 
+            display: flex; flex-direction: column; justify-content: space-between;
+            z-index: 1000; transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* CONTENIDO SUPERIOR DEL SIDEBAR */
         .sidebar-content { padding: 25px 20px; overflow-y: auto; flex-grow: 1; }
+        .sidebar-footer { padding: 20px; border-top: 1px solid var(--brd); display: flex; justify-content: center; }
 
-        /* FOOTER DEL SIDEBAR (BOTÓN ABAJO) */
-        .sidebar-footer { 
-            padding: 20px; 
-            border-top: 1px solid var(--brd); 
-            display: flex; 
-            justify-content: center; /* Centrado cuando está colapsado */
-        }
-
+        /* ESTADO COLAPSADO */
         .sidebar.collapsed { width: var(--sidebar-collapsed); }
-        .sidebar.collapsed .sidebar-title, 
-        .sidebar.collapsed .nav-label, 
-        .sidebar.collapsed .nav-text { display: none; }
-        .sidebar.collapsed .sidebar-header { justify-content: center; }
+        .sidebar.collapsed .sidebar-title, .sidebar.collapsed .nav-label, .sidebar.collapsed .nav-text { display: none; }
+        .sidebar.collapsed .sidebar-header { justify-content: center; border-bottom: none; }
         .sidebar.collapsed .nav-link { justify-content: center; padding: 15px 0; }
         .sidebar.collapsed .nav-icon { margin-right: 0; }
+        .sidebar.collapsed .menu-toggle-btn { width: auto; padding: 8px 12px; }
 
         .sidebar-header { display: flex; align-items: center; gap: 12px; padding-bottom: 25px; border-bottom: 1px solid var(--brd); margin-bottom: 20px; }
         .sidebar-logo { width: 30px; min-width: 30px; }
         .sidebar-title { font-weight: 800; font-size: 14px; letter-spacing: 0.5px; white-space: nowrap; }
 
-        /* EL BOTÓN DE LAS 3 LINEAS */
         .menu-toggle-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--brd);
-            color: white;
-            font-size: 20px;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-            width: 100%; /* Ocupa el ancho del sidebar-footer */
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--brd); color: white; 
+            font-size: 20px; padding: 8px 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; width: 100%;
         }
-        .sidebar.collapsed .menu-toggle-btn { width: auto; padding: 8px 12px; }
         .menu-toggle-btn:hover { background: var(--acc); box-shadow: 0 0 10px var(--glow); }
 
-        /* NAVEGACIÓN */
+        /* NAVEGACIÓN E ICONOS */
         .nav-group { margin-bottom: 25px; }
         .nav-label { font-size: 10px; font-weight: 800; color: var(--dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: block; }
         .nav-link { display: flex; align-items: center; padding: 12px 15px; color: var(--txt); text-decoration: none; font-size: 14px; border-radius: 10px; margin-bottom: 6px; transition: 0.2s; }
@@ -80,24 +55,24 @@
         .nav-icon { margin-right: 12px; display: flex; align-items: center; }
         .nav-icon svg { fill: currentColor; width: 22px; height: 22px; }
 
-        /* MAIN CONTENT */
+        /* CONTENIDO */
         .main { flex: 1; margin-left: var(--sidebar-width); padding: 40px; transition: margin-left 0.3s ease; display: flex; justify-content: center; }
         body.sidebar-collapsed .main { margin-left: var(--sidebar-collapsed); }
         .container { max-width: 900px; width: 100%; }
 
-        /* BANNER MC AJUSTADO */
-        .banner { 
-            width: 100%; height: 250px; 
-            background: url('/banner-mc.png'); 
-            background-size: contain; 
-            background-position: center; 
-            background-repeat: no-repeat; 
-            margin-bottom: 40px; 
+        /* BANNER ESTILO DISCORD (CARD) */
+        .banner-card {
+            background: rgba(12, 12, 18, 0.8); border: 1px solid var(--brd); border-radius: 20px;
+            padding: 30px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex; align-items: center; gap: 25px;
         }
+        .banner-img {
+            width: 100px; height: 100px; background: url('/banner-mc.png'); 
+            background-size: contain; background-position: center; background-repeat: no-repeat;
+        }
+        .banner-title { font-size: clamp(24px, 5vw, 38px); font-weight: 800; color: #fff; line-height: 1.2; }
 
-        h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 800; margin-bottom: 20px; }
-        
-        /* CUADROS INTERACTIVOS (HOVER) */
+        /* REGLAS INTERACTIVAS */
         .rule-item { 
             padding: 12px 15px; border-radius: 10px; border: 1px solid transparent; transition: 0.3s; margin-bottom: 5px; line-height: 1.6; cursor: default;
         }
@@ -119,7 +94,8 @@
             .sidebar-footer { border-top: none; padding: 15px; }
             .sidebar-content { padding: 15px; overflow-y: hidden; }
             .main { margin-left: 0 !important; padding: 20px; }
-            .banner { height: 150px; }
+            .banner-card { flex-direction: column; text-align: center; }
+            .banner-img { width: 80px; height: 80px; }
         }
     </style>
 </head>
@@ -135,7 +111,9 @@
             <div class="nav-group">
                 <span class="nav-label">General</span>
                 <a href="/" class="nav-link">
-                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></span>
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </span>
                     <span class="nav-text">Bienvenid@</span>
                 </a>
             </div>
@@ -143,11 +121,15 @@
             <div class="nav-group">
                 <span class="nav-label">Normativas</span>
                 <a href="/reglas-mc/" class="nav-link active">
-                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 10h4v4H6zm0-6h4v4H6zm12 12h-4v4h4zm0-6h-4v4h4zm0-6h-4v4h4zM12 18h2v-4h-2zm0-6h2V8h-2zm-6 6h4v4H6z"/></svg></span>
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4,2H20A2,2 0 0,1 22,4V20A2,2 0 0,1 20,22H4A2,2 0 0,1 2,20V4A2,2 0 0,1 4,2M6,6V10H10V12H8V18H10V16H14V18H16V12H14V10H18V6H14V10H10V6H6Z" /></svg>
+                    </span>
                     <span class="nav-text">Reglas Minecraft</span>
                 </a>
                 <a href="/reglas-dc/" class="nav-link">
-                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M19.27 4.58C17.77 3.89 16.16 3.4 14.48 3.15c-.21.37-.45.78-.61 1.16-1.79-.27-3.55-.27-5.3 0-.16-.38-.41-.79-.62-1.16-1.68.25-3.29.73-4.79 1.42-.03.01-.06.04-.08.07C1.02 7.75.19 11.52.63 15.22c.01.04.03.07.06.1 1.74 1.28 3.39 2.06 5 2.56.04.01.07-.01.1-.04.39-.53.73-1.1 1.02-1.69.02-.04 0-.09-.04-.11-1.57-.59-3-1.34-4.32-2.22-.04-.03-.05-.08-.02-.12.11-.08.21-.17.31-.25.02-.02.05-.02.07-.01 3.2 1.46 6.66 1.46 9.8 0 .02-.01.05-.01.07.01.1.09.2.17.31.25.03.04.02.09-.02.12-1.32.88-2.75 1.63-4.32 2.22-.04.02-.06.07-.04.11.29.59.63 1.16 1.02 1.69.02.03.06.05.1.04 1.61-.5 3.26-1.28 5-2.56.03-.02.05-.05.06-.1.53-4.27-.33-8-.2.9-12.14a.1.1 0 0 0-.08-.07zM8.52 11.91c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96zm6.96 0c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96z"/></svg></span>
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19.27 4.58C17.77 3.89 16.16 3.4 14.48 3.15c-.21.37-.45.78-.61 1.16-1.79-.27-3.55-.27-5.3 0-.16-.38-.41-.79-.62-1.16-1.68.25-3.29.73-4.79 1.42-.03.01-.06.04-.08.07C1.02 7.75.19 11.52.63 15.22c.01.04.03.07.06.1 1.74 1.28 3.39 2.06 5 2.56.04.01.07-.01.1-.04.39-.53.73-1.1 1.02-1.69.02-.04 0-.09-.04-.11-1.57-.59-3-1.34-4.32-2.22-.04-.03-.05-.08-.02-.12.11-.08.21-.17.31-.25.02-.02.05-.02.07-.01 3.2 1.46 6.66 1.46 9.8 0 .02-.01.05-.01.07.01.1.09.2.17.31.25.03.04.02.09-.02.12-1.32.88-2.75 1.63-4.32 2.22-.04.02-.06.07-.04.11.29.59.63 1.16 1.02 1.69.02.03.06.05.1.04 1.61-.5 3.26-1.28 5-2.56.03-.02.05-.05.06-.1.53-4.27-.33-8-.2.9-12.14a.1.1 0 0 0-.08-.07zM8.52 11.91c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96zm6.96 0c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96z"/></svg>
+                    </span>
                     <span class="nav-text">Reglas Discord</span>
                 </a>
             </div>
@@ -155,7 +137,9 @@
             <div class="nav-group">
                 <span class="nav-label">Postulaciones</span>
                 <a href="/requisitos/" class="nav-link">
-                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></span>
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.85,5 3.19,5.25 2,6V18.5C3.19,17.75 4.85,17.5 6.5,17.5C8.15,17.5 9.81,17.75 11,18.5V6C9.81,5.25 8.15,5 6.5,5Z" /></svg>
+                    </span>
                     <span class="nav-text">Requisitos</span>
                 </a>
             </div>
@@ -168,8 +152,11 @@
 
     <div class="main">
         <div class="container">
-            <h1>⚖️ Reglas Minecraft</h1>
-            <div class="banner"></div>
+            
+            <div class="banner-card">
+                <div class="banner-img"></div>
+                <div class="banner-title">Reglas<br>Minecraft</div>
+            </div>
 
             <div class="alert-box">
                 <p><strong>AVISO:</strong> El equipo de moderación tiene plena autoridad para sancionar cualquier conducta que considere inapropiada, aunque no aparezca expresamente en este reglamento.</p>
@@ -185,8 +172,8 @@
 
                 <div class="info-extra">
                     <h3>🍃 INFO EXTRA</h3>
-                    <p>🌿 Podes hacer tus reportes con un <span class="highlight">AYUDANTE</span> o abre un ticket de soporte.</p>
-                    <p>🌿 Si estás sufriendo <span class="highlight">acoso</span>, repórtalo intentando incluir pruebas (como capturas de pantalla).</p>
+                    <p>🌿 Podes hacer tus reportes con un <span class="highlight">@: AYUDANTE</span> o abre un ticket de soporte y los Staff te ayudamos.</p>
+                    <p>🌿 Si estás sufriendo <span class="highlight">acoso</span>, repórtalo intentando incluir pruebas (como capturas de pantalla, etc.)</p>
                 </div>
 
                 <p class="footer-txt">Juega con honor en Kubeon Network.</p>
@@ -202,5 +189,6 @@
             body.classList.toggle('sidebar-collapsed');
         }
     </script>
+
 </body>
 </html>
