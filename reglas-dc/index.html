@@ -22,69 +22,29 @@
         .nav-link { display: block; padding: 10px 12px; color: var(--txt); text-decoration: none; font-size: 14px; border-radius: 8px; margin-bottom: 4px; transition: 0.2s; }
         .nav-link:hover, .nav-link.active { background: rgba(126, 34, 206, 0.15); color: #c084fc; font-weight: 600; }
 
-        /* MAIN CONTENT */
+        /* MAIN */
         .main { flex: 1; margin-left: 280px; padding: 40px; display: flex; justify-content: center; position: relative; z-index: 10; }
         .container { max-width: 850px; width: 100%; }
+        .banner { width: 100%; height: 280px; background: linear-gradient(rgba(12,12,18,0.1), var(--bg)), url('/banner-dc.png'); background-size: cover; background-position: center; border-radius: 20px; margin-bottom: 40px; border: 1px solid var(--brd); }
         
-        /* BANNER */
-        .banner { 
-            width: 100%; 
-            height: 280px; 
-            background: linear-gradient(rgba(12,12,18,0.1), var(--bg)), url('/banner-dc.png'); 
-            background-size: cover; 
-            background-position: center; 
-            border-radius: 20px; 
-            margin-bottom: 40px; 
-            border: 1px solid var(--brd); 
-        }
+        h1 { font-size: 38px; font-weight: 800; margin-bottom: 20px; }
+        h2 { margin: 40px 0 20px; color: #fff; font-size: 24px; border-left: 4px solid var(--acc); padding-left: 15px; }
 
-        h1 { font-size: 38px; font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; color: #fff; }
-        h2 { margin: 40px 0 20px; color: #fff; font-size: 24px; font-weight: 700; }
+        .wiki-content { line-height: 1.8; font-size: 16px; }
+        .wiki-content p { margin-bottom: 15px; color: #e2e2e2; }
 
-        /* AVISO NARANJA (IGUAL A TU FOTO) */
-        .alert-box { 
-            background: rgba(245, 158, 11, 0.05); 
-            border: 1px solid #f59e0b; 
-            padding: 25px; 
-            border-radius: 12px; 
-            margin-bottom: 35px;
-            line-height: 1.6;
-            font-size: 15px;
-        }
-        .alert-box strong { color: #f59e0b; }
-
-        /* CUADROS DE REGLAS (IGUAL A TU FOTO) */
-        .rule-card { 
-            background: rgba(255, 255, 255, 0.03); 
-            padding: 20px; 
-            border-radius: 12px; 
-            border-left: 4px solid var(--acc); 
-            margin-bottom: 12px; 
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            line-height: 1.5;
-            transition: 0.3s;
-        }
-        .rule-card:hover { background: rgba(255, 255, 255, 0.05); }
-        .rule-card strong { color: var(--yellow); font-size: 18px; min-width: 25px; }
-
+        /* ESTILO DE REGLAS NORMALES */
+        .rule-list { list-style: none; margin-bottom: 30px; }
+        .rule-item { margin-bottom: 12px; padding-left: 5px; }
+        
         /* RESALTADOS */
+        .rule-num { color: var(--yellow); font-weight: 800; margin-right: 5px; }
         .highlight { color: var(--yellow); font-weight: 700; }
         .underline { text-decoration: underline; }
 
-        /* INFO EXTRA VERDE */
-        .info-green { 
-            background: rgba(34, 197, 94, 0.05); 
-            border: 1px solid rgba(34, 197, 94, 0.2); 
-            padding: 25px; 
-            border-radius: 12px; 
-            margin-top: 40px; 
-            border-left: 5px solid #22c55e;
-        }
-        .info-green h3 { color: #4ade80; margin-bottom: 10px; font-weight: 800; }
-
-        .footer-txt { text-align: center; margin-top: 50px; font-weight: 700; color: #d8b4fe; font-size: 18px; }
+        /* INFO EXTRA */
+        .info-extra { background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.2); padding: 20px; border-radius: 12px; margin-top: 40px; border-left: 5px solid #22c55e; }
+        .info-extra h3 { color: #4ade80; margin-bottom: 10px; font-size: 18px; }
 
         @media (max-width: 900px) {
             .sidebar { width: 100%; height: auto; position: relative; border-right: none; }
@@ -121,37 +81,39 @@
             <div class="banner"></div>
             
             <h1>💬 Reglas Discord</h1>
-
-            <div class="alert-box">
-                <strong>AVISO:</strong> El equipo de moderación tiene plena autoridad para sancionar cualquier conducta que considere inapropiada, aunque no aparezca expresamente en este reglamento. Esto garantiza que todos podamos jugar de manera justa, segura y divertida.
-            </div>
             
             <div class="wiki-content">
                 <p>𝄀 𝅍 Leer las normas es algo obligatorio. No ser consciente de ellas no justifica su incumplimiento.</p>
+                <p>𝄀 𝅍 Esta lista no incluye la totalidad de las normas, solo las más destacables y con mayor importancia con el objetivo de facilitar su lectura.</p>
+                <p>𝄀 𝅍 Las reglas se aplican al servidor y mensajes directos.</p>
+                <p>𝄀 𝅍 El equipo de moderación está capacitado y autorizado para la toma de medidas ante acciones que lo requieran, estén o no explícitamente incluidas en la lista.</p>
 
                 <h2>Reglas Generales</h2>
-                <div class="rule-card"><strong>1.</strong> No Se Permite Insultar, molestar, discriminar, faltar el respeto a los usuarios.</div>
-                <div class="rule-card"><strong>2.</strong> No Está Permitido Contener nombre y/o avatar <span class="highlight underline">inapropiado</span> (símbolos nazis, foto explícitas, etc.)</div>
-                <div class="rule-card"><strong>3.</strong> No Está Permitido Contener nombres <span class="highlight underline">intagueables</span>.</div>
-                <div class="rule-card"><strong>4.</strong> No Está Permitido cualquier tipo de <span class="underline">spam</span> (redes sociales, servidores de Discord, Minecraft, etc.) dentro y fuera del servidor.</div>
-                <div class="rule-card"><strong>5.</strong> No esta permitido publicar contenido delicado, sugestivo, malicioso, NSFW o <span class="highlight">+18</span>.</div>
-                <div class="rule-card"><strong>6.</strong> No se va a tolerar el acoso, el hostigamiento o la toxicidad a usuarios, staffs u otras comunidades.</div>
-                <div class="rule-card"><strong>7.</strong> Esta prohibido evadir sanciones mediante el uso de multicuentas.</div>
-
-                <h2>Reglas Canales de Voz</h2>
-                <div class="rule-card"><strong>1.</strong> Saturación, gritos, soplos o poner música a través del micrófono con el fin de molestar.</div>
-                <div class="rule-card"><strong>2.</strong> El uso de <span class="highlight">modulador de voz</span> o aplicaciones similares para molestar.</div>
-                <div class="rule-card"><strong>3.</strong> Trasmitir <span class="highlight underline">chats privados</span> de cualquier red social.</div>
-                <div class="rule-card"><strong>4.</strong> Trasmitir aplicaciones como: <span class="highlight">OmeTV o Tinder</span>; contenido con <span class="underline">derechos de autor</span> (Netflix, Prime Video, etc.)</div>
-                <div class="rule-card"><strong>5.</strong> Trasmitir contenido <span class="highlight">NSFW</span> o mostrar elementos ilegales mediante la cámara.</div>
-
-                <div class="info-green">
-                    <h3>🍃 INFO EXTRA</h3>
-                    <p>🌿 Podes hacer tus reportes con un <span class="highlight">@: AYUDANTE</span> o abriendo un ticket de soporte.</p>
-                    <p>🌿 Si estás sufriendo <span class="highlight">acoso</span>, repórtalo intentando incluir pruebas (como capturas de pantalla).</p>
+                <div class="rule-list">
+                    <div class="rule-item"><span class="rule-num">1 .</span> No Se Permite Insultar, molestar, discriminar, faltar el respeto a los usuarios.</div>
+                    <div class="rule-item"><span class="rule-num">2 .</span> No Está Permitido Contener nombre y/o avatar <span class="highlight underline">inapropiado</span> (símbolos nazis, foto explícitas, etc.)</div>
+                    <div class="rule-item"><span class="rule-num">3 .</span> No Está Permitido Contener nombres <span class="highlight underline">intagueables</span>.</div>
+                    <div class="rule-item"><span class="rule-num">4 .</span> No Está Permitido cualquier tipo de <span class="underline">spam</span> (redes sociales, plataformas de contenido, servidores de Discord, Minecraft, etc.) dentro y fuera del servidor.</div>
+                    <div class="rule-item"><span class="rule-num">5 .</span> No esta permitido publicar cualquier tipo de contenido delicado, sugestivo, malicioso, NSFW o <span class="highlight">+18</span> (mensajes, fotos, nicks, vídeos, etc).</div>
+                    <div class="rule-item"><span class="rule-num">6 .</span> No se va a tolerar el acoso, el hostigamiento o la toxicidad a usuarios, staffs, streamers u otras comunidades.</div>
+                    <div class="rule-item"><span class="rule-num">7 .</span> Esta prohibido evadir sanciones (mediante bugs, saliendo del servidor o con el uso de multicuentas). Solo se va a permitir tener otra cuenta en el servidor para apelar un baneo.</div>
                 </div>
 
-                <p class="footer-txt">Juega con honor en Kubeon Network.</p>
+                <h2>Reglas Canales de Voz</h2>
+                <div class="rule-list">
+                    <div class="rule-item"><span class="rule-num">1 .</span> Saturación, gritos, soplos, reproducción de sonidos, poner música que no sea de los bots (todo a través del micrófono y con el fin de molestar).</div>
+                    <div class="rule-item"><span class="rule-num">2 .</span> El uso de <span class="highlight">modulador de voz</span>, SoundPad y aplicaciones similares con el fin de molestar.</div>
+                    <div class="rule-item"><span class="rule-num">3 .</span> Trasmitir <span class="highlight underline">chat privados</span> de cualquier red social.</div>
+                    <div class="rule-item"><span class="rule-num">4 .</span> Trasmitir aplicaciones como: <span class="highlight">OmeTV, Tinder</span> (o similares); <span class="highlight">Twitter</span>; contenido con <span class="underline">derechos de autor</span> (Netflix, Prime Video, HBO, Deportes, etc.)</div>
+                    <div class="rule-item"><span class="rule-num">5 .</span> Trasmitir contenido <span class="highlight">NSFW</span>.</div>
+                    <div class="rule-item"><span class="rule-num">6 .</span> Mostrar cualquier tipo de <span class="highlight underline">elemento ilegal</span> mediante la cámara (drogas, armas, etc.)</div>
+                </div>
+
+                <div class="info-extra">
+                    <h3>🍃 INFO EXTRA</h3>
+                    <p>🌿 Podes hacer tus reportes con un <span class="highlight">@: AYUDANTE</span> o abre un ticket de soporte y los Staff te ayudamos.</p>
+                    <p>🌿 Si estás sufriendo <span class="highlight">acoso</span> por parte de algún usuario, repórtalo intentando incluir pruebas de ello (como capturas de pantalla, etc.)</p>
+                </div>
             </div>
         </div>
     </div>
