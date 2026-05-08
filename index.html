@@ -22,6 +22,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -29,6 +30,7 @@
             color: var(--text-main);
             display: flex;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* --- SIDEBAR --- */
@@ -40,7 +42,7 @@
             position: fixed;
             padding: 20px;
             overflow-y: auto;
-            transition: all 0.3s ease;
+            z-index: 100;
         }
 
         .sidebar-header {
@@ -52,20 +54,10 @@
             margin-bottom: 20px;
         }
 
-        .sidebar-logo {
-            width: 40px;
-        }
+        .sidebar-logo { width: 40px; }
+        .sidebar-title { font-weight: 800; font-size: 18px; letter-spacing: 1px; }
 
-        .sidebar-title {
-            font-weight: 800;
-            font-size: 18px;
-            letter-spacing: 1px;
-        }
-
-        .nav-group {
-            margin-bottom: 25px;
-        }
-
+        .nav-group { margin-bottom: 25px; }
         .nav-label {
             font-size: 11px;
             font-weight: 800;
@@ -85,6 +77,7 @@
             font-weight: 500;
             border-radius: 8px;
             margin-bottom: 5px;
+            cursor: pointer;
             transition: all 0.2s;
         }
 
@@ -104,7 +97,8 @@
         .banner {
             width: 100%;
             height: 250px;
-            background: linear-gradient(rgba(126, 34, 206, 0.2), rgba(9, 11, 17, 0.9)), url('https://i.imgur.com/your-minecraft-screenshot.jpg');
+            /* Se usa el archivo banner.png */
+            background: linear-gradient(rgba(126, 34, 206, 0.1), rgba(9, 11, 17, 0.95)), url('banner.png');
             background-size: cover;
             background-position: center;
             border-radius: 20px;
@@ -112,29 +106,30 @@
             border: 1px solid var(--border);
         }
 
-        .content-header {
-            margin-bottom: 30px;
+        /* --- CONTROL DE SECCIONES --- */
+        .section {
+            display: none; /* Oculto por defecto */
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block; /* Solo se muestra la activa */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .content-header h1 {
-            font-size: 36px;
+            font-size: clamp(24px, 5vw, 36px);
             font-weight: 800;
             margin-bottom: 15px;
         }
 
-        .wiki-text {
-            line-height: 1.8;
-            font-size: 16px;
-            color: var(--text-main);
-        }
-
-        .wiki-text p {
-            margin-bottom: 20px;
-        }
-
-        .wiki-text strong {
-            color: var(--accent-hover);
-        }
+        .wiki-text { line-height: 1.8; font-size: 16px; color: var(--text-main); }
+        .wiki-text p { margin-bottom: 20px; }
+        .wiki-text strong { color: var(--accent-hover); }
 
         .alert {
             background: rgba(126, 34, 206, 0.1);
@@ -144,19 +139,21 @@
             margin: 30px 0;
         }
 
+        ul { margin-left: 25px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+
         /* --- MOBILE --- */
         @media (max-width: 900px) {
+            body { flex-direction: column; }
             .sidebar {
-                transform: translateX(-100%);
-                z-index: 100;
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
             }
-            .main-content {
-                margin-left: 0;
-                padding: 20px;
-            }
-            .banner {
-                height: 180px;
-            }
+            .main-content { margin-left: 0; padding: 20px; }
+            .banner { height: 150px; }
         }
     </style>
 </head>
@@ -169,68 +166,106 @@
         </div>
 
         <div class="nav-group">
-            <span class="nav-label">Bienvenid@</span>
-            <a href="#" class="nav-link active">Bienvenid@ a Kubeon</a>
+            <span class="nav-label">General</span>
+            <div class="nav-link active" onclick="showSection('inicio')">Bienvenid@</div>
         </div>
 
         <div class="nav-group">
-            <span class="nav-label">Información</span>
-            <a href="#reglas-server" class="nav-link">Normas Principales</a>
-            <a href="#reglas-discord" class="nav-link">Normas Discord</a>
+            <span class="nav-label">Normativas</span>
+            <div class="nav-link" onclick="showSection('reglas-server')">Normas Minecraft</div>
+            <div class="nav-link" onclick="showSection('reglas-discord')">Normas Discord</div>
         </div>
 
         <div class="nav-group">
-            <span class="nav-label">Tutoriales</span>
-            <a href="#" class="nav-link">Cómo entrar (IP)</a>
-            <a href="#" class="nav-link">Survival</a>
-            <a href="#" class="nav-link">Rangos y Tienda</a>
-        </div>
-
-        <div class="nav-group">
-            <span class="nav-label">Otros</span>
-            <a href="#requisitos" class="nav-link">Requisitos Info</a>
+            <span class="nav-label">Postulaciones</span>
+            <div class="nav-link" onclick="showSection('requisitos')">Requisitos Staff</div>
         </div>
     </div>
 
     <div class="main-content">
         <div class="banner"></div>
 
-        <div class="content-header">
-            <h1>🌍 Bienvenid@ a Kubeon Network</h1>
-            <p style="color: var(--text-dim); font-weight: 500;">¡Nos alegra darte la bienvenida a Kubeon!</p>
+        <div id="inicio" class="section active">
+            <div class="content-header">
+                <h1>🌍 Bienvenid@ a Kubeon Network</h1>
+                <p style="color: var(--text-dim); font-weight: 500;">La información oficial de nuestra comunidad.</p>
+            </div>
+            <div class="wiki-text">
+                <p>
+                    Somos una <strong>Network hispanohablante</strong> enfocada en brindar la mejor experiencia técnica y divertida para los jugadores. Contamos con modalidades estables, eventos únicos y un soporte dedicado para que disfrutes de una comunidad sana y con futuro.
+                </p>
+                <p>
+                    En este sitio encontrarás todo lo necesario para empezar con buen pie. Te recomendamos navegar por el menú lateral para conocer nuestras normativas y guías.
+                </p>
+                <div class="alert">
+                    🌟 Prepárate para la aventura… tu próxima historia comienza aquí. <strong>¡Buena suerte y diviértete!</strong>
+                </div>
+            </div>
         </div>
 
-        <div class="wiki-text">
-            <p>
-                Somos una network <strong>Kubeon Network</strong> enfocada en brindar la mejor experiencia técnica y divertida para los jugadores. Contamos con modalidades estables, eventos únicos y un soporte dedicado para que disfrutes de una comunidad sana y con futuro.
-            </p>
-
-            <p>
-                En este sitio encontrarás todo lo necesario para empezar: <strong>reglas de convivencia</strong>, consejos útiles y tutoriales paso a paso para cada modalidad. Respetar las normas es clave para mantener un ambiente justo y amigable.
-            </p>
-
-            <div class="alert">
-                🌟 Prepárate para la aventura… tu próxima historia comienza aquí. <strong>¡Buena suerte y diviértete!</strong>
+        <div id="reglas-server" class="section">
+            <div class="content-header">
+                <h1>⚖️ Normas de Minecraft</h1>
             </div>
+            <div class="wiki-text">
+                <p>Para asegurar una experiencia justa, todos los jugadores deben cumplir:</p>
+                <ul>
+                    <li><strong>Uso de Hacks:</strong> El uso de cualquier cliente modificado que otorgue ventajas (X-Ray, KillAura, Fly, etc.) resultará en baneo permanente.</li>
+                    <li><strong>Respeto:</strong> No se tolera el acoso, la discriminación ni los insultos graves hacia otros jugadores o miembros del equipo.</li>
+                    <li><strong>Griefing:</strong> Destruir construcciones ajenas en zonas protegidas está estrictamente prohibido.</li>
+                </ul>
+            </div>
+        </div>
 
-            <h2 id="reglas-server" style="margin: 40px 0 20px 0; font-weight: 800;">⚖️ Normas del Servidor</h2>
-            <p>1. Prohibido el uso de hacks o clientes modificados que den ventaja.</p>
-            <p>2. Respetar a todos los miembros del staff y jugadores.</p>
-            <p>3. No hacer spam ni flood en el chat global.</p>
+        <div id="reglas-discord" class="section">
+            <div class="content-header">
+                <h1>💬 Normas de Discord</h1>
+            </div>
+            <div class="wiki-text">
+                <ul>
+                    <li>No hagas Spam o Flood en los canales de texto.</li>
+                    <li>No utilices multicuentas para evadir sanciones.</li>
+                    <li>El uso de canales de voz debe ser moderado; no grabes ni grites para molestar.</li>
+                </ul>
+            </div>
+        </div>
 
-            <h2 id="reglas-discord" style="margin: 40px 0 20px 0; font-weight: 800;">💬 Normas de Discord</h2>
-            <p>1. Mantener un lenguaje respetuoso en los canales de voz y texto.</p>
-            <p>2. No publicar contenido inapropiado o enlaces sospechosos.</p>
-
-            <h2 id="requisitos" style="margin: 40px 0 20px 0; font-weight: 800;">📋 Requisitos Info</h2>
-            <p>Para postularte a Staff o ser creador de contenido, debes cumplir:</p>
-            <ul>
-                <li style="margin-left: 20px; margin-bottom: 10px;">Edad mínima: 14 años.</li>
-                <li style="margin-left: 20px; margin-bottom: 10px;">Tener cuenta de Discord vinculada.</li>
-                <li style="margin-left: 20px; margin-bottom: 10px;">No tener sanciones graves previas.</li>
-            </ul>
+        <div id="requisitos" class="section">
+            <div class="content-header">
+                <h1>📋 Requisitos para Staff</h1>
+            </div>
+            <div class="wiki-text">
+                <p>Si quieres formar parte del equipo de Kubeon, estos son los puntos básicos:</p>
+                <ul>
+                    <li>Tener un mínimo de 14 años.</li>
+                    <li>Conocimiento básico de comandos de moderación.</li>
+                    <li>Disponibilidad de tiempo y micrófono claro.</li>
+                    <li>Cuenta de Discord activa y vinculada.</li>
+                </ul>
+            </div>
         </div>
     </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
+
+            // Quitar clase activa de los links
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(l => l.classList.remove('active'));
+
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+
+            // Poner el link actual como activo
+            event.currentTarget.classList.add('active');
+
+            // En móviles, hacer scroll hacia arriba al cambiar de sección
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 </html>
