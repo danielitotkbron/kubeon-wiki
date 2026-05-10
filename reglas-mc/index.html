@@ -13,12 +13,13 @@
             --glow: rgba(147, 51, 234, 0.5);
             --sidebar-width: 280px; --sidebar-collapsed: 85px;
             --yellow: #fcd34d;
+            --green: #22c55e;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--txt); display: flex; min-height: 100vh; overflow-x: hidden; transition: margin-left 0.3s ease; }
 
-        /* SIDEBAR DEFINITIVO */
+        /* SIDEBAR ESTRUCTURA */
         .sidebar { 
             width: var(--sidebar-width); background: var(--side); border-right: 1px solid var(--brd); 
             height: 100vh; position: fixed; left: 0; top: 0; 
@@ -33,10 +34,9 @@
         .sidebar.collapsed .sidebar-header { justify-content: center; border-bottom: none; }
         .sidebar.collapsed .nav-link { justify-content: center; padding: 15px 0; }
         .sidebar.collapsed .nav-icon { margin-right: 0; }
-        .sidebar.collapsed .menu-toggle-btn { width: auto; padding: 8px 12px; }
 
         .sidebar-header { display: flex; align-items: center; gap: 12px; padding-bottom: 25px; border-bottom: 1px solid var(--brd); margin-bottom: 20px; }
-        .sidebar-logo { width: 30px; min-width: 30px; }
+        .sidebar-logo { width: 30px; }
         .sidebar-title { font-weight: 800; font-size: 14px; letter-spacing: 0.5px; white-space: nowrap; color: #fff; }
 
         .menu-toggle-btn {
@@ -45,30 +45,30 @@
         }
         .menu-toggle-btn:hover { background: var(--acc); box-shadow: 0 0 10px var(--glow); }
 
-        /* NAVEGACIÓN */
+        /* NAVEGACIÓN E ICONOS */
         .nav-group { margin-bottom: 25px; }
         .nav-label { font-size: 10px; font-weight: 800; color: var(--dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: block; }
-        .nav-link { display: flex; align-items: center; padding: 12px 15px; color: var(--txt); text-decoration: none; font-size: 13px; border-radius: 10px; margin-bottom: 6px; transition: all 0.2s ease; }
+        .nav-link { display: flex; align-items: center; padding: 12px 15px; color: var(--txt); text-decoration: none; font-size: 14px; border-radius: 10px; margin-bottom: 6px; transition: 0.2s; }
         .nav-link:hover, .nav-link.active { background: rgba(126, 34, 206, 0.15); color: #c084fc; font-weight: 600; }
-        .nav-icon { margin-right: 12px; display: flex; align-items: center; font-size: 18px; color: inherit; }
-        .nav-icon svg { fill: currentColor; width: 20px; height: 20px; }
+        .nav-icon { margin-right: 12px; display: flex; align-items: center; }
+        .nav-icon svg { fill: currentColor; width: 22px; height: 22px; }
 
         /* CONTENIDO PRINCIPAL */
         .main { flex: 1; margin-left: var(--sidebar-width); padding: 40px; transition: margin-left 0.3s ease; display: flex; justify-content: center; }
         body.sidebar-collapsed .main { margin-left: var(--sidebar-collapsed); }
         .container { max-width: 900px; width: 100%; }
 
-        /* BANNER ARRIBA SIEMPRE */
+        /* BANNER MÁS GRANDE */
         .banner { 
-            width: 100%; height: 280px; 
+            width: 100%; height: 400px; /* Tamaño agrandado */
             background: url('/banner-mc.png'); 
             background-size: contain; background-position: center; background-repeat: no-repeat;
-            margin-bottom: 30px; 
+            margin-bottom: 20px; 
         }
 
         h1 { font-size: clamp(26px, 5vw, 40px); font-weight: 800; margin-bottom: 25px; color: #fff; text-align: center; }
 
-        /* CUADRO DE AVISO */
+        /* AVISO NARANJA */
         .alert-box { 
             background: rgba(245, 158, 11, 0.05); border: 1px solid #f59e0b; padding: 25px; border-radius: 12px; margin-bottom: 30px; font-size: 15px; line-height: 1.6;
         }
@@ -77,18 +77,36 @@
         .pointer-text { font-size: 16px; margin-bottom: 30px; color: #e2e2e2; }
         .arrow { color: var(--acc); margin-right: 10px; font-weight: 800; }
 
-        /* LISTA DE REGLAS INTERACTIVAS */
-        .rule-list { display: flex; flex-direction: column; gap: 12px; }
-        .rule-card { 
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--brd); padding: 20px; border-radius: 15px; 
-            font-size: 15px; line-height: 1.6; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            cursor: default; color: var(--txt); display: flex; align-items: flex-start; gap: 15px;
+        /* REGLAS CON EFECTO DE ILUMINACIÓN */
+        .rule-item { 
+            padding: 15px 20px; border-radius: 12px; border: 1px solid transparent; 
+            transition: all 0.3s ease; margin-bottom: 8px; line-height: 1.6; cursor: default;
         }
-        .rule-card:hover { 
-            transform: scale(1.03); background: rgba(126, 34, 206, 0.1); border-color: #a855f7; 
-            box-shadow: 0 10px 30px var(--glow); color: #fff;
+        .rule-item:hover { 
+            background: rgba(126, 34, 206, 0.08); border-color: var(--acc); 
+            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.25); transform: translateX(10px);
         }
-        .rule-num { color: var(--yellow); font-weight: 800; font-size: 18px; min-width: 25px; }
+        .rule-num { color: var(--yellow); font-weight: 800; margin-right: 10px; font-size: 17px; }
+        .highlight { color: var(--yellow); font-weight: 700; }
+
+        /* INFO EXTRA (ESTILO IMAGEN) */
+        .info-extra-container {
+            background: rgba(34, 197, 94, 0.03); 
+            border: 1px solid rgba(34, 197, 94, 0.2); 
+            border-left: 5px solid var(--green);
+            padding: 30px; border-radius: 15px; margin-top: 50px;
+            transition: all 0.3s ease;
+        }
+        .info-extra-container:hover {
+            background: rgba(34, 197, 94, 0.06);
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.2);
+            transform: translateY(-5px);
+        }
+        .info-extra-header { display: flex; align-items: center; gap: 10px; color: var(--green); font-weight: 800; font-size: 20px; margin-bottom: 20px; }
+        .info-extra-content p { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; font-size: 15px; color: #ccc; }
+        .info-extra-content strong { color: var(--yellow); }
+
+        .footer-txt { text-align: center; margin-top: 60px; font-weight: 700; color: #d8b4fe; font-size: 18px; }
 
         @media (max-width: 850px) {
             body { flex-direction: column; }
@@ -96,7 +114,8 @@
             .sidebar-footer { border-top: none; padding: 15px; }
             .sidebar-content { padding: 15px; overflow-y: hidden; }
             .main { margin-left: 0 !important; padding: 20px; }
-            .banner { height: 180px; }
+            .banner { height: 200px; }
+            .rule-item:hover { transform: none; }
         }
     </style>
 </head>
@@ -112,9 +131,7 @@
             <div class="nav-group">
                 <span class="nav-label">General</span>
                 <a href="/" class="nav-link">
-                    <span class="nav-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    </span>
+                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></span>
                     <span class="nav-text">Bienvenid@ a Kubeon Network</span>
                 </a>
             </div>
@@ -122,15 +139,11 @@
             <div class="nav-group">
                 <span class="nav-label">Normativas</span>
                 <a href="/reglas-mc/" class="nav-link active">
-                    <span class="nav-icon">
-                        <svg viewBox="0 0 24 24"><path d="M4,2H20A2,2 0 0,1 22,4V20A2,2 0 0,1 20,22H4A2,2 0 0,1 2,20V4A2,2 0 0,1 4,2M6,6V10H10V12H8V18H10V16H14V18H16V12H14V10H18V6H14V10H10V6H6Z" /></svg>
-                    </span>
+                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4,2H20A2,2 0 0,1 22,4V20A2,2 0 0,1 20,22H4A2,2 0 0,1 2,20V4A2,2 0 0,1 4,2M6,6V10H10V12H8V18H10V16H14V18H16V12H14V10H18V6H14V10H10V6H6Z" /></svg></span>
                     <span class="nav-text">Reglas Minecraft</span>
                 </a>
                 <a href="/reglas-dc/" class="nav-link">
-                    <span class="nav-icon">
-                        <svg viewBox="0 0 24 24"><path d="M19.27 4.58C17.77 3.89 16.16 3.4 14.48 3.15c-.21.37-.45.78-.61 1.16-1.79-.27-3.55-.27-5.3 0-.16-.38-.41-.79-.62-1.16-1.68.25-3.29.73-4.79 1.42-.03.01-.06.04-.08.07C1.02 7.75.19 11.52.63 15.22c.01.04.03.07.06.1 1.74 1.28 3.39 2.06 5 2.56.04.01.07-.01.1-.04.39-.53.73-1.1 1.02-1.69.02-.04 0-.09-.04-.11-1.57-.59-3-1.34-4.32-2.22-.04-.03-.05-.08-.02-.12.11-.08.21-.17.31-.25.02-.02.05-.02.07-.01 3.2 1.46 6.66 1.46 9.8 0 .02-.01.05-.01.07.01.1.09.2.17.31.25.03.04.02.09-.02.12-1.32.88-2.75 1.63-4.32 2.22-.04.02-.06.07-.04.11.29.59.63 1.16 1.02 1.69.02.03.06.05.1.04 1.61-.5 3.26-1.28 5-2.56.03-.02.05-.05.06-.1.53-4.27-.33-8-.2.9-12.14a.1.1 0 0 0-.08-.07zM8.52 11.91c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96zm6.96 0c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96z"/></svg>
-                    </span>
+                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M19.27 4.58C17.77 3.89 16.16 3.4 14.48 3.15c-.21.37-.45.78-.61 1.16-1.79-.27-3.55-.27-5.3 0-.16-.38-.41-.79-.62-1.16-1.68.25-3.29.73-4.79 1.42-.03.01-.06.04-.08.07C1.02 7.75.19 11.52.63 15.22c.01.04.03.07.06.1 1.74 1.28 3.39 2.06 5 2.56.04.01.07-.01.1-.04.39-.53.73-1.1 1.02-1.69.02-.04 0-.09-.04-.11-1.57-.59-3-1.34-4.32-2.22-.04-.03-.05-.08-.02-.12.11-.08.21-.17.31-.25.02-.02.05-.02.07-.01 3.2 1.46 6.66 1.46 9.8 0 .02-.01.05-.01.07.01.1.09.2.17.31.25.03.04.02.09-.02.12-1.32.88-2.75 1.63-4.32 2.22-.04.02-.06.07-.04.11.29.59.63 1.16 1.02 1.69.02.03.06.05.1.04 1.61-.5 3.26-1.28 5-2.56.03-.02.05-.05.06-.1.53-4.27-.33-8-.2.9-12.14a.1.1 0 0 0-.08-.07zM8.52 11.91c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96zm6.96 0c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96z"/></svg></span>
                     <span class="nav-text">Reglas Discord</span>
                 </a>
             </div>
@@ -138,7 +151,7 @@
             <div class="nav-group">
                 <span class="nav-label">Postulaciones</span>
                 <a href="/requisitos/" class="nav-link">
-                    <span class="nav-icon">🕮</span>
+                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.85,5 3.19,5.25 2,6V18.5C3.19,17.75 4.85,17.5 6.5,17.5C8.15,17.5 9.81,17.75 11,18.5V6C9.81,5.25 8.15,5 6.5,5Z"/></svg></span>
                     <span class="nav-text">Requisitos</span>
                 </a>
             </div>
@@ -159,60 +172,33 @@
                 <strong>AVISO:</strong> El equipo de moderación tiene plena autoridad para sancionar cualquier conducta que considere inapropiada, aunque no aparezca expresamente en este reglamento.
             </div>
 
-            <p class="pointer-text">
-                <span class="arrow">➤</span> Leer las normas es algo obligatorio. No ser consciente de ellas no justifica su incumplimiento.
-            </p>
+            <p class="pointer-text"><span class="arrow">➤</span> Leer las normas es algo obligatorio. No ser consciente de ellas no justifica su incumplimiento.</p>
 
             <div class="rule-list">
-                <div class="rule-card">
-                    <span class="rule-num">1.</span>
-                    <p>No está permitido <strong>estafar</strong> a otros jugadores bajo ninguna circunstancia.</p>
+                <div class="rule-item"><span class="rule-num">1.</span> No está permitido <span class="highlight">estafar</span> a otros jugadores.</div>
+                <div class="rule-item"><span class="rule-num">2.</span> Prohibido el <span class="highlight">tpakill</span> bajo ninguna circunstancia.</div>
+                <div class="rule-item"><span class="rule-num">3.</span> Prohibido el uso de <span class="highlight">hacks</span> o cualquier elemento que beneficie al jugador sobre los demás.</div>
+                <div class="rule-item"><span class="rule-num">4.</span> El uso de <span class="highlight">Xray o Killaura</span> resultará en sanción inmediata e inapelable.</div>
+                <div class="rule-item"><span class="rule-num">5.</span> Prohibido <span class="highlight">griffear</span> (destruir o robar) construcciones ajenas.</div>
+                <div class="rule-item"><span class="rule-num">6.</span> Prohibido utilizar <span class="highlight">skins obscenas</span> o inapropiadas.</div>
+                <div class="rule-item"><span class="rule-num">7.</span> Tratar de <span class="highlight">evadir una sanción</span> con multicuentas o VPN está estrictamente prohibido.</div>
+                <div class="rule-item"><span class="rule-num">8.</span> Prohibido <span class="highlight">aprovecharse de bugs</span> o errores para beneficiarse personalmente.</div>
+                <div class="rule-item"><span class="rule-num">9.</span> Prohibido <span class="highlight">filtrar información privada</span> de un jugador o de sí mismo.</div>
+                <div class="rule-item"><span class="rule-num">10.</span> Utilizar <span class="highlight">nombres con insultos</span> o que sean considerados obscenos.</div>
+                <div class="rule-item"><span class="rule-num">11.</span> El uso inadecuado de comandos, como mandar <span class="highlight">/report falsos</span> o para insultar.</div>
+            </div>
+
+            <div class="info-extra-container">
+                <div class="info-extra-header">
+                    <span>🍃</span> INFO EXTRA
                 </div>
-                <div class="rule-card">
-                    <span class="rule-num">2.</span>
-                    <p>Prohibido el <strong>tpakill</strong> (teletransportar a alguien para asesinarlo).</p>
-                </div>
-                <div class="rule-card">
-                    <span class="rule-num">3.</span>
-                    <p>Prohibido el uso de <strong>hacks</strong>, clientes modificados o cualquier elemento que otorgue una ventaja injusta.</p>
-                </div>
-                <div class="rule-card">
-                    <span class="rule-num">4.</span>
-                    <p>Uso estrictamente prohibido de <strong>Xray</strong> y <strong>Killaura</strong>.</p>
-                </div>
-                <div class="rule-card">
-                    <span class="rule-num">5.</span>
-                    <p>No se permite <strong>griffear</strong> (destruir o robar) construcciones ajenas o el mapa del servidor.</p>
-                </div>
-                <div class="rule-card">
-                    <span class="rule-num">6.</span>
-                    <p>Prohibido utilizar <strong>skins obscenas</strong> o inapropiadas para el ambiente del servidor.</p>
-                </div>
-                <div class="rule-card">
-                    <span class="rule-num">7.</span>
-                    <p>No intentar <strong>evadir una sanción</strong> mediante el uso de multicuentas o servicios de VPN.</p>
-                </div>
-                <div class="rule-card">
-                    <span class="rule-num">8.</span>
-                    <p>Prohibido <strong>aprovecharse de bugs</strong> o errores técnicos para beneficio propio o de terceros.</p>
-                </div>
-                <div class="rule-card">
-                    <span class="rule-num">9.</span>
-                    <p>No está permitido <strong>filtrar información privada</strong> (Doxing) de un jugador o de uno mismo.</p>
-                </div>
-                <div class="rule-card">
-                    <span class="rule-num">10.</span>
-                    <p>No utilizar <strong>nombres (nicks)</strong> que contengan insultos o sean considerados obscenos.</p>
-                </div>
-                <div class="rule-card">
-                    <span class="rule-num">11.</span>
-                    <p>Uso adecuado de los comandos: prohibido mandar <strong>/report falsos</strong> o utilizarlos para insultar.</p>
+                <div class="info-extra-content">
+                    <p>🌿 Podes hacer tus reportes con un <strong>@: AYUDANTE</strong> o abre un ticket de soporte y los Staff te ayudamos.</p>
+                    <p>🌿 Si estás sufriendo <strong>acoso</strong>, repórtalo intentando incluir pruebas (como capturas de pantalla, etc.)</p>
                 </div>
             </div>
 
-            <p style="text-align: center; margin: 60px 0; font-weight: 700; color: #d8b4fe; font-size: 16px;">
-                Juega con honor en Kubeon Network.
-            </p>
+            <p class="footer-txt">Juega con honor en Kubeon Network.</p>
         </div>
     </div>
 
@@ -224,5 +210,6 @@
             body.classList.toggle('sidebar-collapsed');
         }
     </script>
+
 </body>
 </html>
