@@ -3,162 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Reglas-DC | Kubeon Network</title>
+    <title>Reglas Discord | Kubeon Network</title>
     <link rel="icon" type="image/png" href="/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --bg: #090b11; 
-            --side: #11141d; 
-            --acc: #7e22ce; 
-            --txt: #f5f5f5; 
-            --dim: #9ca3af; 
-            --brd: rgba(168,85,247,0.15); 
-            --yellow: #fcd34d; 
+            --bg: #090b11; --side: #11141d; --acc: #7e22ce; --txt: #f5f5f5; 
+            --dim: #9ca3af; --brd: rgba(168,85,247,0.15); 
+            --glow: rgba(147, 51, 234, 0.5);
+            --sidebar-width: 280px; --sidebar-collapsed: 85px;
+            --yellow: #fcd34d;
+            --green: #22c55e;
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat',sans-serif; -webkit-tap-highlight-color: transparent; }
-        
-        body { background: var(--bg); color: var(--txt); display: flex; min-height: 100vh; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--txt); display: flex; min-height: 100vh; overflow-x: hidden; transition: margin-left 0.3s ease; }
 
-        /* SIDEBAR */
-        .sidebar { width: 280px; background: var(--side); border-right: 1px solid var(--brd); height: 100vh; position: fixed; padding: 25px; overflow-y: auto; z-index: 100; }
+        /* SIDEBAR ESTRUCTURA */
+        .sidebar { 
+            width: var(--sidebar-width); background: var(--side); border-right: 1px solid var(--brd); 
+            height: 100vh; position: fixed; left: 0; top: 0; 
+            display: flex; flex-direction: column; justify-content: space-between;
+            z-index: 1000; transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-content { padding: 25px 20px; overflow-y: auto; flex-grow: 1; }
+        .sidebar-footer { padding: 20px; border-top: 1px solid var(--brd); display: flex; justify-content: center; }
+
+        .sidebar.collapsed { width: var(--sidebar-collapsed); }
+        .sidebar.collapsed .sidebar-title, .sidebar.collapsed .nav-label, .sidebar.collapsed .nav-text { display: none; }
+        .sidebar.collapsed .sidebar-header { justify-content: center; border-bottom: none; }
+        .sidebar.collapsed .nav-link { justify-content: center; padding: 15px 0; }
+        .sidebar.collapsed .nav-icon { margin-right: 0; }
+
         .sidebar-header { display: flex; align-items: center; gap: 12px; padding-bottom: 25px; border-bottom: 1px solid var(--brd); margin-bottom: 20px; }
-        .sidebar-logo { width: 35px; }
-        .sidebar-title { font-weight: 800; font-size: 16px; letter-spacing: 1px; }
+        .sidebar-logo { width: 30px; }
+        .sidebar-title { font-weight: 800; font-size: 14px; letter-spacing: 0.5px; white-space: nowrap; color: #fff; }
+
+        .menu-toggle-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--brd); color: white; 
+            font-size: 20px; padding: 8px 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; width: 100%;
+        }
+        .menu-toggle-btn:hover { background: var(--acc); box-shadow: 0 0 10px var(--glow); }
+
+        /* NAVEGACIÓN */
         .nav-group { margin-bottom: 25px; }
-        .nav-label { font-size: 11px; font-weight: 800; color: var(--dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: block; }
-        .nav-link { display: block; padding: 12px; color: var(--txt); text-decoration: none; font-size: 14px; border-radius: 8px; margin-bottom: 4px; transition: 0.2s; }
+        .nav-label { font-size: 10px; font-weight: 800; color: var(--dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; display: block; }
+        .nav-link { display: flex; align-items: center; padding: 12px 15px; color: var(--txt); text-decoration: none; font-size: 14px; border-radius: 10px; margin-bottom: 6px; transition: all 0.2s ease; }
         .nav-link:hover, .nav-link.active { background: rgba(126, 34, 206, 0.15); color: #c084fc; font-weight: 600; }
+        .nav-icon { margin-right: 12px; display: flex; align-items: center; }
+        .nav-icon svg { fill: currentColor; width: 22px; height: 22px; }
 
-        /* MAIN CONTENT */
-        .main { flex: 1; margin-left: 280px; padding: 40px; display: flex; justify-content: center; position: relative; z-index: 10; }
-        .container { max-width: 850px; width: 100%; }
-        .banner { width: 100%; height: 280px; background: linear-gradient(rgba(12,12,18,0.1), var(--bg)), url('/banner-dc.png'); background-size: cover; background-position: center; border-radius: 20px; margin-bottom: 40px; border: 1px solid var(--brd); }
-        
-        h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 800; margin-bottom: 20px; color: #fff; }
-        h2 { margin: 40px 0 15px; color: #fff; font-size: 22px; border-bottom: 1px solid var(--brd); padding-bottom: 10px; }
+        /* CONTENIDO PRINCIPAL */
+        .main { flex: 1; margin-left: var(--sidebar-width); padding: 40px; transition: margin-left 0.3s ease; display: flex; justify-content: center; }
+        body.sidebar-collapsed .main { margin-left: var(--sidebar-collapsed); }
+        .container { max-width: 900px; width: 100%; }
 
-        .wiki-content { line-height: 1.8; font-size: 16px; }
-        .wiki-content p { margin-bottom: 15px; color: #e2e2e2; }
+        /* BANNER */
+        .banner { 
+            width: 100%; height: 280px; 
+            background: url('/banner-dc.png'); 
+            background-size: contain; background-position: center; background-repeat: no-repeat;
+            margin-bottom: 20px; 
+        }
 
-        /* AVISO NARANJA */
+        h1 { font-size: clamp(26px, 5vw, 40px); font-weight: 800; margin-bottom: 25px; color: #fff; text-align: center; }
+        h2 { font-size: 22px; font-weight: 800; margin: 40px 0 20px; color: #fff; border-bottom: 1px solid var(--brd); padding-bottom: 10px; }
+
+        /* CUADRO DE AVISO */
         .alert-box { 
-            background: rgba(245, 158, 11, 0.05); 
-            border: 1px solid #f59e0b; 
-            padding: 25px; 
-            border-radius: 12px; 
-            margin-bottom: 35px;
-            font-size: 15px;
+            background: rgba(245, 158, 11, 0.05); border: 1px solid #f59e0b; padding: 25px; border-radius: 12px; margin-bottom: 30px; font-size: 15px; line-height: 1.6;
         }
+        .alert-box strong { color: #f59e0b; }
 
-        /* --- EFECTO DE CUADRO AL PASAR EL MOUSE --- */
-        .rule-item { 
-            padding: 12px 15px; 
-            border-radius: 10px;
-            border: 1px solid transparent; /* Borde invisible por defecto */
-            transition: all 0.3s ease;
-            margin-bottom: 5px;
-            cursor: default;
-        }
-
-        .rule-item:hover, .rule-item:active { 
-            background: rgba(126, 34, 206, 0.08); /* Fondo muy suave */
-            border-color: var(--acc); /* Aparece el borde morado */
-            box-shadow: 0 0 15px rgba(147, 51, 234, 0.2); /* Brillo alrededor */
-            transform: translateX(8px); /* Se mueve un poquito a la derecha para resaltar */
-        }
-
-        .rule-num { color: var(--yellow); font-weight: 800; margin-right: 8px; }
-        .highlight { color: var(--yellow); font-weight: 700; }
-        .underline { text-decoration: underline; }
+        .pointer-text { font-size: 16px; margin-bottom: 15px; color: #e2e2e2; }
         .arrow { color: var(--acc); margin-right: 10px; font-weight: 800; }
 
-        /* INFO EXTRA VERDE */
-        .info-extra { 
-            background: rgba(34, 197, 94, 0.05); 
-            border: 1px solid rgba(34, 197, 94, 0.2); 
-            padding: 25px; 
-            border-radius: 15px; 
-            margin-top: 50px; 
-            border-left: 6px solid #22c55e;
+        /* REGLAS CON EFECTO DE ILUMINACIÓN */
+        .rule-item { 
+            padding: 15px 20px; border-radius: 12px; border: 1px solid transparent; 
+            transition: all 0.3s ease; margin-bottom: 8px; line-height: 1.6; cursor: default;
         }
-        .info-extra h3 { color: #4ade80; margin-bottom: 15px; font-weight: 800; }
+        .rule-item:hover { 
+            background: rgba(126, 34, 206, 0.08); border-color: var(--acc); 
+            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.25); transform: translateX(10px);
+        }
+        .rule-num { color: var(--yellow); font-weight: 800; margin-right: 10px; font-size: 17px; }
+        .highlight { color: var(--yellow); font-weight: 700; }
 
-        .footer-txt { text-align: center; margin-top: 50px; font-weight: 700; color: #d8b4fe; font-size: 18px; }
+        /* INFO EXTRA VERDE */
+        .info-extra-container {
+            background: rgba(34, 197, 94, 0.03); border: 1px solid rgba(34, 197, 94, 0.2); 
+            border-left: 5px solid var(--green); padding: 30px; border-radius: 15px; margin-top: 50px;
+            transition: all 0.3s ease;
+        }
+        .info-extra-container:hover { background: rgba(34, 197, 94, 0.06); box-shadow: 0 0 25px rgba(34, 197, 94, 0.2); transform: translateY(-5px); }
+        .info-extra-header { display: flex; align-items: center; gap: 10px; color: var(--green); font-weight: 800; font-size: 20px; margin-bottom: 20px; }
+        .info-extra-content p { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; font-size: 15px; color: #ccc; }
+
+        .footer-txt { text-align: center; margin-top: 60px; font-weight: 700; color: #d8b4fe; font-size: 18px; }
 
         @media (max-width: 850px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; border-right: none; padding: 15px; border-bottom: 1px solid var(--brd); }
-            .main { margin-left: 0; padding: 20px; }
+            .sidebar { width: 100% !important; height: auto; position: relative; border-bottom: 1px solid var(--brd); flex-direction: row; }
+            .sidebar-footer { border-top: none; padding: 15px; }
+            .sidebar-content { padding: 15px; overflow-y: hidden; }
+            .main { margin-left: 0 !important; padding: 20px; }
             .banner { height: 160px; }
-            .rule-item:hover { transform: none; /* Quitamos el movimiento en cel para que no sea molesto */ }
+            .rule-item:hover { transform: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <img src="/logo.png" class="sidebar-logo">
-            <span class="sidebar-title">KUBEON</span>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <img src="/logo.png" class="sidebar-logo">
+                <span class="sidebar-title">KUBEON NETWORK</span>
+            </div>
+
+            <div class="nav-group">
+                <span class="nav-label">General</span>
+                <a href="/" class="nav-link">
+                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></span>
+                    <span class="nav-text">Bienvenid@ a Kubeon Network</span>
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <span class="nav-label">Normativas</span>
+                <a href="/reglas-mc/" class="nav-link">
+                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4,2H20A2,2 0 0,1 22,4V20A2,2 0 0,1 20,22H4A2,2 0 0,1 2,20V4A2,2 0 0,1 4,2M6,6V10H10V12H8V18H10V16H14V18H16V12H14V10H18V6H14V10H10V6H6Z" /></svg></span>
+                    <span class="nav-text">Reglas Minecraft</span>
+                </a>
+                <a href="/reglas-dc/" class="nav-link active">
+                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M19.27 4.58C17.77 3.89 16.16 3.4 14.48 3.15c-.21.37-.45.78-.61 1.16-1.79-.27-3.55-.27-5.3 0-.16-.38-.41-.79-.62-1.16-1.68.25-3.29.73-4.79 1.42-.03.01-.06.04-.08.07C1.02 7.75.19 11.52.63 15.22c.01.04.03.07.06.1 1.74 1.28 3.39 2.06 5 2.56.04.01.07-.01.1-.04.39-.53.73-1.1 1.02-1.69.02-.04 0-.09-.04-.11-1.57-.59-3-1.34-4.32-2.22-.04-.03-.05-.08-.02-.12.11-.08.21-.17.31-.25.02-.02.05-.02.07-.01 3.2 1.46 6.66 1.46 9.8 0 .02-.01.05-.01.07.01.1.09.2.17.31.25.03.04.02.09-.02.12-1.32.88-2.75 1.63-4.32 2.22-.04.02-.06.07-.04.11.29.59.63 1.16 1.02 1.69.02.03.06.05.1.04 1.61-.5 3.26-1.28 5-2.56.03-.02.05-.05.06-.1.53-4.27-.33-8-.2.9-12.14a.1.1 0 0 0-.08-.07zM8.52 11.91c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96zm6.96 0c-.96 0-1.75-.88-1.75-1.96s.76-1.96 1.75-1.96c.99 0 1.77.88 1.75 1.96 0 1.08-.76 1.96-1.75 1.96z"/></svg></span>
+                    <span class="nav-text">Reglas Discord</span>
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <span class="nav-label">Postulaciones</span>
+                <a href="/requisitos/" class="nav-link">
+                    <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.85,5 3.19,5.25 2,6V18.5C3.19,17.75 4.85,17.5 6.5,17.5C8.15,17.5 9.81,17.75 11,18.5V6C9.81,5.25 8.15,5 6.5,5Z"/></svg></span>
+                    <span class="nav-text">Requisitos</span>
+                </a>
+            </div>
         </div>
-        <div class="nav-group">
-            <span class="nav-label">General</span>
-            <a href="/" class="nav-link">Bienvenid@</a>
-        </div>
-        <div class="nav-group">
-            <span class="nav-label">Normativas Kubeon</span>
-            <a href="/reglas-mc/" class="nav-link">Reglas Minecraft</a>
-            <a href="/reglas-dc/" class="nav-link active">Reglas Discord</a>
-        </div>
-        <div class="nav-group">
-            <span class="nav-label">Postulaciones</span>
-            <a href="/requisitos/" class="nav-link">Requisitos Staff</a>
+
+        <div class="sidebar-footer">
+            <button class="menu-toggle-btn" onclick="toggleSidebar()">☰</button>
         </div>
     </div>
 
     <div class="main">
         <div class="container">
             <div class="banner"></div>
-            
+
             <h1>💬 Reglas Discord</h1>
 
             <div class="alert-box">
-                <p><strong>AVISO:</strong> El equipo de moderación tiene plena autoridad para sancionar cualquier conducta que considere inapropiada, aunque no aparezca expresamente en este reglamento.</p>
+                <strong>AVISO:</strong> El equipo de moderación tiene plena autoridad para sancionar cualquier conducta que considere inapropiada, aunque no aparezca expresamente en este reglamento.
             </div>
-            
-            <div class="wiki-content">
-                <p><span class="arrow">➤</span> Leer las normas es algo obligatorio. No ser consciente de ellas no justifica su incumplimiento.</p>
-                <p><span class="arrow">➤</span> Esta lista solo incluye las normas más destacables para facilitar su lectura.</p>
-                <p><span class="arrow">➤</span> Las reglas se aplican al servidor y mensajes directos.</p>
 
-                <h2>Reglas Generales</h2>
-                <div class="rule-item"><span class="rule-num">1.</span> No Se Permite Insultar, molestar, discriminar, faltar el respeto a los usuarios.</div>
-                <div class="rule-item"><span class="rule-num">2.</span> No Está Permitido Contener nombre y/o avatar <span class="highlight underline">inapropiado</span> (símbolos nazis, foto explícitas, etc.)</div>
-                <div class="rule-item"><span class="rule-num">3.</span> No Está Permitido Contener nombres <span class="highlight underline">intagueables</span>.</div>
-                <div class="rule-item"><span class="rule-num">4.</span> No Está Permitido cualquier tipo de <span class="underline">spam</span> (redes sociales, servidores de Discord, Minecraft, etc.) dentro y fuera del servidor.</div>
-                <div class="rule-item"><span class="rule-num">5.</span> No esta permitido publicar contenido delicado, sugestivo, malicioso, NSFW o <span class="highlight">+18</span>.</div>
-                <div class="rule-item"><span class="rule-num">6.</span> No se va a tolerar el acoso, el hostigamiento o la toxicidad a usuarios o staffs.</div>
-                <div class="rule-item"><span class="rule-num">7.</span> Esta prohibido evadir sanciones mediante el uso de multicuentas.</div>
+            <p class="pointer-text"><span class="arrow">➤</span> Leer las normas es algo obligatorio. No ser consciente de ellas no justifica su incumplimiento.</p>
+            <p class="pointer-text"><span class="arrow">➤</span> Esta lista solo incluye las normas más destacables para facilitar su lectura.</p>
+            <p class="pointer-text"><span class="arrow">➤</span> Las reglas se aplican al servidor y mensajes directos.</p>
 
-                <h2>Reglas Canales de Voz</h2>
-                <div class="rule-item"><span class="rule-num">1.</span> Saturación, gritos, soplos o poner música a través del micrófono con el fin de molestar.</div>
-                <div class="rule-item"><span class="rule-num">2.</span> El uso de <span class="highlight">modulador de voz</span>, SoundPad y aplicaciones similares para molestar.</div>
-                <div class="rule-item"><span class="rule-num">3.</span> Trasmitir <span class="highlight underline">chats privados</span> de cualquier red social.</div>
-                <div class="rule-item"><span class="rule-num">4.</span> Trasmitir aplicaciones como: <span class="highlight">OmeTV, Tinder</span>; contenido con <span class="underline">copyright</span> (Netflix, Prime Video, HBO, etc.)</div>
-                <div class="rule-item"><span class="rule-num">5.</span> Trasmitir contenido <span class="highlight">NSFW</span> o mostrar elementos ilegales mediante la cámara.</div>
+            <h2>Reglas Generales</h2>
+            <div class="rule-list">
+                <div class="rule-item"><span class="rule-num">1.</span> No Se Permite <span class="highlight">Insultar</span>, molestar, discriminar o faltar el respeto a los usuarios.</div>
+                <div class="rule-item"><span class="rule-num">2.</span> Prohibido contener nombres o avatares <span class="highlight">inapropiados</span> (símbolos nazis, fotos explícitas, etc.)</div>
+                <div class="rule-item"><span class="rule-num">3.</span> No Está Permitido utilizar nombres <span class="highlight">intagueables</span>.</div>
+                <div class="rule-item"><span class="rule-num">4.</span> Prohibido cualquier tipo de <span class="highlight">spam</span> (redes sociales, otros servidores, etc.) dentro y fuera del servidor.</div>
+                <div class="rule-item"><span class="rule-num">5.</span> No está permitido publicar contenido delicado, NSFW o <span class="highlight">+18</span>.</div>
+                <div class="rule-item"><span class="rule-num">6.</span> No se tolerará el acoso, hostigamiento o la <span class="highlight">toxicidad</span> a usuarios o staffs.</div>
+                <div class="rule-item"><span class="rule-num">7.</span> Esta prohibido <span class="highlight">evadir sanciones</span> mediante el uso de multicuentas.</div>
+            </div>
 
-                <div class="info-extra">
-                    <h3>🍃 INFO EXTRA</h3>
-                    <p>🌿 Podes hacer tus reportes con un <span class="highlight">@: AYUDANTE</span> o abre un ticket de soporte y los Staff te ayudamos.</p>
-                    <p>🌿 Si estás sufriendo <span class="highlight">acoso</span>, repórtalo intentando incluir pruebas (como capturas de pantalla, etc.)</p>
+            <h2>Reglas Canales de Voz</h2>
+            <div class="rule-list">
+                <div class="rule-item"><span class="rule-num">1.</span> Saturación, gritos, soplos o poner música a través del micrófono para molestar.</div>
+                <div class="rule-item"><span class="rule-num">2.</span> El uso de <span class="highlight">modulador de voz</span>, SoundPad y apps similares para molestar.</div>
+                <div class="rule-item"><span class="rule-num">3.</span> Trasmitir <span class="highlight">chats privados</span> de cualquier red social.</div>
+                <div class="rule-item"><span class="rule-num">4.</span> Trasmitir apps como: <span class="highlight">OmeTV, Tinder</span>; o contenido con copyright (Netflix, HBO, etc.)</div>
+                <div class="rule-item"><span class="rule-num">5.</span> Trasmitir contenido NSFW o mostrar <span class="highlight">elementos ilegales</span> mediante la cámara.</div>
+            </div>
+
+            <div class="info-extra-container">
+                <div class="info-extra-header"><span>🍃</span> INFO EXTRA</div>
+                <div class="info-extra-content">
+                    <p>🌿 Podes hacer tus reportes con un <strong>@: AYUDANTE</strong> o abre un ticket de soporte y los Staff te ayudamos.</p>
+                    <p>🌿 Si estás sufriendo <strong>acoso</strong>, repórtalo intentando incluir pruebas (como capturas de pantalla, etc.)</p>
                 </div>
-
-                <p class="footer-txt">Juega con honor en Kubeon Network.</p>
             </div>
+
+            <p class="footer-txt">Juega con honor en Kubeon Network.</p>
         </div>
     </div>
 
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const body = document.body;
+            sidebar.classList.toggle('collapsed');
+            body.classList.toggle('sidebar-collapsed');
+        }
+    </script>
 </body>
 </html>
