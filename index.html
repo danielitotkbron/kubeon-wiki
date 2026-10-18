@@ -23,115 +23,103 @@
             overflow-x: hidden;
         }
 
-        /* FONDO ANIMADO */
-        .background {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none; 
-        }
-
-        .glow {
+        /* BARRA SUPERIOR FLOTANTE */
+        .top-bar {
             position: absolute;
-            width: 700px;
-            height: 700px;
-            border-radius: 50%;
-            filter: blur(150px);
-            opacity: .15;
-            animation: float 8s ease-in-out infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
         }
 
-        .glow1 { background: #7e22ce; top: -250px; left: -200px; }
-        .glow2 { background: #581c87; bottom: -250px; right: -200px; animation-delay: 4s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(25px) scale(1.08); }
-        }
-
-        /* CONTENEDOR PRINCIPAL */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        /* BOTÓN DE VOLVER */
         .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            color: #9ca3af;
+            color: #d1d5db;
             text-decoration: none;
             font-weight: 600;
-            margin-bottom: 40px;
             transition: 0.3s;
+            background: rgba(9, 11, 17, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
         }
 
         .back-btn:hover {
             color: #a855f7;
+            background: rgba(9, 11, 17, 0.8);
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .header h1 {
-            font-size: 48px;
-            font-weight: 900;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .header p {
-            color: #9ca3af;
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* SECCIONES DE SERVICIO */
-        .service-section {
+        /* SECCIÓN DE BANNER (HERO) PARA CADA SERVICIO */
+        .hero-service {
+            position: relative;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            gap: 60px;
-            margin-bottom: 120px;
+            padding: 0 10%;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
         }
 
-        .service-section.reverse {
-            flex-direction: row-reverse;
+        /* FONDO DE LA IMAGEN (DERECHA) */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center right;
+            z-index: -2;
         }
 
-        /* LADO DEL TEXTO Y PRECIOS */
-        .service-info {
-            flex: 1;
+        /* DEGRADADO OSCURO PARA LEER EL TEXTO (IZQUIERDA) */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #090b11 40%, rgba(9, 11, 17, 0.7) 70%, rgba(9, 11, 17, 0.2) 100%);
+            z-index: -1;
+        }
+
+        /* CONTENIDO DEL TEXTO Y PRECIOS */
+        .hero-content {
+            max-width: 650px;
+            width: 100%;
+            padding-top: 80px; /* Espacio para el botón de volver */
         }
 
         .service-title {
-            font-size: 38px;
+            font-size: 56px;
             font-weight: 900;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
+            text-transform: uppercase;
         }
 
         .service-title svg {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             fill: #a855f7;
         }
 
         .service-desc {
-            color: #9ca3af;
-            font-size: 17px;
+            color: #d1d5db;
+            font-size: 18px;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
+        /* TARJETAS DE PLANES */
         .plans-container {
             display: flex;
             flex-direction: column;
@@ -139,277 +127,253 @@
         }
 
         .plan-item {
-            background: rgba(18, 18, 25, .92);
+            background: rgba(18, 18, 25, .85);
             border: 1px solid rgba(168, 85, 247, .3);
             border-radius: 16px;
-            padding: 20px;
+            padding: 20px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: 0.3s;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
         }
 
         .plan-item:hover {
             border-color: #a855f7;
-            transform: translateX(5px);
-            box-shadow: 0 5px 20px rgba(126, 34, 206, .15);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(126, 34, 206, .2);
+            background: rgba(25, 20, 35, 0.95);
         }
 
         .plan-info h4 {
             font-size: 18px;
             font-weight: 800;
             margin-bottom: 5px;
+            color: white;
         }
 
         .plan-info p {
             color: #9ca3af;
             font-size: 14px;
+            line-height: 1.4;
+            max-width: 350px;
         }
 
         .plan-price {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 900;
             color: #a855f7;
             white-space: nowrap;
+            margin-left: 20px;
         }
 
-        /* LADO DE LA IMAGEN */
-        .service-image {
-            flex: 1;
-            background: rgba(18, 18, 25, .92);
-            border: 1px solid rgba(168, 85, 247, .3);
-            border-radius: 24px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .service-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* CTA FINAL */
-        .cta-section {
-            background: rgba(18, 18, 25, .6);
-            border: 1px solid rgba(168, 85, 247, .2);
-            border-radius: 24px;
-            padding: 60px 30px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            margin-top: 40px;
-        }
-
-        .cta-section h2 {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .cta-section p {
-            color: #9ca3af;
-            margin-bottom: 30px;
-            font-size: 18px;
-        }
-
-        .btn-main {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-            padding: 18px 40px;
-            border-radius: 12px;
+        /* BOTÓN DE COMPRA/ACCION */
+        .plan-btn {
             background: #7e22ce;
             color: white;
-            font-size: 18px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
             font-weight: 700;
-            transition: all 0.2s ease;
+            font-size: 14px;
+            margin-left: 20px;
+            transition: 0.2s;
+            border: 1px solid transparent;
         }
 
-        .btn-main:hover {
+        .plan-btn:hover {
             background: #9333ea;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
+            border-color: #d8b4fe;
         }
 
         /* RESPONSIVE */
-        @media(max-width: 900px) {
-            .service-section, .service-section.reverse {
+        @media(max-width: 1024px) {
+            .hero-service {
+                padding: 100px 5% 60px;
+                text-align: center;
+                min-height: auto;
+            }
+            .hero-overlay {
+                background: rgba(9, 11, 17, 0.85); /* Más oscuro en móviles para leer bien */
+            }
+            .hero-content {
+                padding-top: 0;
+                margin: 0 auto;
+            }
+            .service-title {
+                justify-content: center;
+                font-size: 42px;
+            }
+            .plan-item {
                 flex-direction: column;
                 text-align: center;
-                gap: 40px;
+                gap: 15px;
             }
-            .service-title { justify-content: center; }
-            .service-image { width: 100%; height: 300px; }
-            .plan-item { flex-direction: column; text-align: center; gap: 10px; }
-        }
-
-        @media(max-width: 600px) {
-            .header h1 { font-size: 36px; }
-            .btn-main { width: 100%; }
+            .plan-info p {
+                max-width: 100%;
+            }
+            .plan-price {
+                margin-left: 0;
+            }
+            .plan-btn {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- FONDO ANIMADO -->
-    <div class="background">
-        <div class="glow glow1"></div>
-        <div class="glow glow2"></div>
-    </div>
-
-    <div class="container">
-        
-        <!-- Botón para volver -->
+    <!-- BOTÓN DE VOLVER (FIJO ARRIBA A LA IZQUIERDA) -->
+    <div class="top-bar">
         <a href="https://kubeon.xyz" class="back-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             Volver al inicio
         </a>
-
-        <div class="header">
-            <h1>Nuestros Servicios</h1>
-            <p>Elige el plan que mejor se adapte a las necesidades de tu comunidad o proyecto.</p>
-        </div>
-
-        <!-- SECCIÓN DISCORD -->
-        <div class="service-section">
-            <div class="service-info">
-                <div class="service-title">
-                    <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/></svg>
-                    Discord
-                </div>
-                <div class="service-desc">Configuración y estructuración para tu servidor. No creamos bots desde cero, pero dejamos los que necesites listos y funcionando.</div>
-                
-                <div class="plans-container">
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Servidor Normal</h4>
-                            <p>Canales básicos, roles y configuración de 1 bot.</p>
-                        </div>
-                        <div class="plan-price">$4,99</div>
-                    </div>
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Servidor para Comunidad</h4>
-                            <p>Estructura completa, tickets, bienvenidas y 2 bots configurados.</p>
-                        </div>
-                        <div class="plan-price">$7,49</div>
-                    </div>
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Servidor Profesional</h4>
-                            <p>Organización total, seguridad avanzada, automatizaciones y bots ilimitados.</p>
-                        </div>
-                        <div class="plan-price">$14,99</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Cuadro de imagen (Reemplaza el src con tu captura) -->
-            <div class="service-image">
-                <img src="discord-1.png" alt="Configuración de Discord">
-            </div>
-        </div>
-
-        <!-- SECCIÓN MINECRAFT -->
-        <div class="service-section reverse">
-            <div class="service-info">
-                <div class="service-title">
-                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 5h14v6H5V5zm0 8h14v6H5v-6z"/></svg>
-                    Minecraft
-                </div>
-                <div class="service-desc">Instalación y configuración de servidores. Nos enfocamos en dejar tus plugins listos, optimizados y sin errores.</div>
-                
-                <div class="plans-container">
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Setup Básico</h4>
-                            <p>Configuración de 2 plugins a elección.</p>
-                        </div>
-                        <div class="plan-price">$3,99</div>
-                    </div>
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Setup Intermedio</h4>
-                            <p>Configuración de hasta 5 plugins a elección.</p>
-                        </div>
-                        <div class="plan-price">$5,99</div>
-                    </div>
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Setup Avanzado</h4>
-                            <p>Configuración de hasta 8 plugins a elección.</p>
-                        </div>
-                        <div class="plan-price">$10,99</div>
-                    </div>
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Setup Completo</h4>
-                            <p>Configuración de todos los plugins que necesites.</p>
-                        </div>
-                        <div class="plan-price">$14,99</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="service-image">
-                <img src="minecraft-1.png" alt="Configuración de Minecraft">
-            </div>
-        </div>
-
-        <!-- SECCIÓN ROBLOX -->
-        <div class="service-section">
-            <div class="service-info">
-                <div class="service-title">
-                    <svg viewBox="0 0 24 24"><path d="M5.1 2.3L2.3 18.9l16.6 2.8 2.8-16.6L5.1 2.3zm6.9 11.9l-1.6-.3.3-1.6 1.6.3-.3 1.6z"/></svg>
-                    Roblox
-                </div>
-                <div class="service-desc">Programación de scripts y lógica de juego. (No realizamos modelado 3D ni construcción de mapas, nos enfocamos en que tu juego funcione).</div>
-                
-                <div class="plans-container">
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Lógica Básica</h4>
-                            <p>Solo lógica del juego y algún cambio menor en scripts existentes.</p>
-                        </div>
-                        <div class="plan-price">$4,99</div>
-                    </div>
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Desarrollo Parcial</h4>
-                            <p>Creación de hasta 3 scripts para la jugabilidad del juego.</p>
-                        </div>
-                        <div class="plan-price">$7,99</div>
-                    </div>
-                    <div class="plan-item">
-                        <div class="plan-info">
-                            <h4>Juego Completo (Scripts)</h4>
-                            <p>Desarrollo de toda la lógica de tu juego en scripts.</p>
-                        </div>
-                        <div class="plan-price">$15,49</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="service-image">
-                <img src="roblox-1.png" alt="Programación de Roblox">
-            </div>
-        </div>
-
-        <!-- CTA FINAL -->
-        <div class="cta-section">
-            <h2>¿Listo para llevar tu proyecto al siguiente nivel?</h2>
-            <p>Contáctanos y hablemos sobre lo que necesitas. Sin compromiso.</p>
-            <a href="https://discord.gg/yBwJqHF2xk" target="_blank" class="btn-main">Hablar por Discord</a>
-        </div>
-
+        <!-- Aquí podrías poner tu logo si quieres que salga arriba a la derecha -->
     </div>
+
+    <!-- ================= SERVICIO DISCORD ================= -->
+    <section class="hero-service">
+        <!-- PON AQUÍ TU IMAGEN DE FONDO PARA DISCORD -->
+        <div class="hero-bg" style="background-image: url('banner-discord.jpg');"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <div class="service-title">
+                <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                Discord
+            </div>
+            <div class="service-desc">Configuración y estructuración para tu servidor. No creamos bots desde cero, pero dejamos los que necesites listos y funcionando a la perfección.</div>
+            
+            <div class="plans-container">
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Servidor Normal</h4>
+                        <p>Canales básicos, roles, permisos y configuración de bots esenciales.</p>
+                    </div>
+                    <div class="plan-price">$4,99</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+                
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Servidor para Comunidad</h4>
+                        <p>Estructura completa, sistema de tickets, bienvenidas y bots configurados.</p>
+                    </div>
+                    <div class="plan-price">$7,49</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Servidor Profesional</h4>
+                        <p>Organización total, seguridad avanzada, automatizaciones y bots ilimitados.</p>
+                    </div>
+                    <div class="plan-price">$14,99</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SERVICIO MINECRAFT ================= -->
+    <section class="hero-service">
+        <!-- PON AQUÍ TU IMAGEN DE FONDO PARA MINECRAFT -->
+        <div class="hero-bg" style="background-image: url('banner-minecraft.jpg');"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <div class="service-title">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 5h14v6H5V5zm0 8h14v6H5v-6z"/></svg>
+                Minecraft
+            </div>
+            <div class="service-desc">Instalación y configuración de servidores. Nos enfocamos en dejar tus plugins listos, optimizados y sin errores.</div>
+            
+            <div class="plans-container">
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Setup Básico</h4>
+                        <p>Configuración de 2 plugins a elección.</p>
+                    </div>
+                    <div class="plan-price">$3,99</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+                
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Setup Intermedio</h4>
+                        <p>Configuración de hasta 5 plugins a elección.</p>
+                    </div>
+                    <div class="plan-price">$5,99</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Setup Avanzado</h4>
+                        <p>Configuración de hasta 8 plugins a elección.</p>
+                    </div>
+                    <div class="plan-price">$10,99</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Setup Completo</h4>
+                        <p>Configuración de todos los plugins que necesites.</p>
+                    </div>
+                    <div class="plan-price">$14,99</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SERVICIO ROBLOX ================= -->
+    <section class="hero-service">
+        <!-- PON AQUÍ TU IMAGEN DE FONDO PARA ROBLOX -->
+        <div class="hero-bg" style="background-image: url('banner-roblox.jpg');"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <div class="service-title">
+                <svg viewBox="0 0 24 24"><path d="M5.1 2.3L2.3 18.9l16.6 2.8 2.8-16.6L5.1 2.3zm6.9 11.9l-1.6-.3.3-1.6 1.6.3-.3 1.6z"/></svg>
+                Roblox
+            </div>
+            <div class="service-desc">Programación de scripts y lógica de juego. Nos enfocamos en que tu juego funcione perfecto (no realizamos modelado 3D ni construcción de mapas).</div>
+            
+            <div class="plans-container">
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Lógica Básica</h4>
+                        <p>Solo lógica del juego y algún cambio menor en scripts existentes.</p>
+                    </div>
+                    <div class="plan-price">$4,99</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+                
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Desarrollo Parcial</h4>
+                        <p>Creación de hasta 3 scripts para la jugabilidad del juego.</p>
+                    </div>
+                    <div class="plan-price">$7,99</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+
+                <div class="plan-item">
+                    <div class="plan-info">
+                        <h4>Juego Completo (Scripts)</h4>
+                        <p>Desarrollo de toda la lógica de tu juego en scripts.</p>
+                    </div>
+                    <div class="plan-price">$15,49</div>
+                    <a href="https://discord.gg/yBwJqHF2xk" class="plan-btn">Comprar</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </body>
 </html>
