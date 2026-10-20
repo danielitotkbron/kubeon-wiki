@@ -190,14 +190,21 @@
                     <span id="file-name">Haz clic para subir hasta 3 capturas</span>
                 </label>
                 
-                <div class="modal-buttons">
+                <div class="modal-buttons" id="botones-formulario">
                     <button type="button" onclick="cerrarSolicitud()" class="btn-cancel">Cancelar</button>
                     <button type="submit" class="btn-submit">Enviar Solicitud</button>
+                </div>
+
+                <!-- NUEVO BOTÓN DE PAGO -->
+                <div id="contenedor-pago" style="display: none; margin-top: 20px; text-align: center;">
+                    <p style="color: #22c55e; font-weight: 600; margin-bottom: 15px; font-size: 15px;">¡Datos guardados! Ahora completa el pago para iniciar tu proyecto.</p>
+                    <a id="link-pago-tebex" href="#" target="_blank" class="btn-submit" style="display: block; text-decoration: none; padding: 16px; font-size: 16px; background: #22c55e; border-radius: 10px; font-weight: bold; color: white;">Pagar en Tebex</a>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- SCRIPT FIREBASE Y TEBEX -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
@@ -221,7 +228,6 @@
         const fileInput = document.getElementById('sol-imagenes');
         const fileNameDisplay = document.getElementById('file-name');
 
-        // Mostrar cuántos archivos seleccionó
         fileInput.addEventListener('change', () => {
             if (fileInput.files.length > 3) {
                 alert("Máximo puedes subir 3 archivos.");
@@ -236,6 +242,12 @@
             document.getElementById('modal-plan-info').innerText = `Plan: ${plan} - ${precio}`;
             document.getElementById('sol-plan').value = plan;
             document.getElementById('sol-precio').value = precio;
+            
+            // Reiniciar el modal por si se abrió antes
+            document.getElementById('botones-formulario').style.display = 'flex';
+            document.getElementById('contenedor-pago').style.display = 'none';
+            form.reset();
+            
             modal.classList.add('show');
         };
 
@@ -245,15 +257,13 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = form.querySelector('button[type="submit"]');
-            const originalText = btn.innerText;
+            const btn = document.querySelector('.btn-submit');
             btn.innerText = "Subiendo archivos...";
             btn.disabled = true;
 
             try {
                 let urlsImagenes = [];
                 
-                // Subir fotos si hay
                 if (fileInput.files.length > 0) {
                     for (let i = 0; i < fileInput.files.length; i++) {
                         const file = fileInput.files[i];
@@ -265,27 +275,53 @@
                 }
 
                 btn.innerText = "Enviando solicitud...";
+                const planSeleccionado = document.getElementById('sol-plan').value;
 
                 await addDoc(collection(db, "tareas"), {
-                    titulo: document.getElementById('sol-plan').value,
+                    titulo: planSeleccionado,
                     descripcion: document.getElementById('sol-detalles').value,
                     asignadoA: "SIN ASIGNAR",
                     estado: "solicitud",
                     contacto: document.getElementById('sol-contacto').value,
                     precio: document.getElementById('sol-precio').value,
-                    imagenes: urlsImagenes, // Guardamos el array de URLs
+                    imagenes: urlsImagenes,
                     fecha: new Date()
                 });
                 
-                alert("¡Solicitud enviada! Un miembro del staff se contactará contigo pronto.");
-                cerrarSolicitud();
-                form.reset();
-                fileNameDisplay.innerText = "Haz clic para subir hasta 3 capturas";
+                document.getElementById('botones-formulario').style.display = 'none';
+                const linkPago = document.getElementById('link-pago-tebex');
+                
+                // ENLACES DE TEBEX
+                if (planSeleccionado.includes('Discord - Servidor Normal')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754378";
+                } else if (planSeleccionado.includes('Discord - Servidor Comunidad')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754393";
+                } else if (planSeleccionado.includes('Discord - Servidor Profesional')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754396";
+                } 
+                else if (planSeleccionado.includes('Minecraft - Setup Básico')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754400";
+                } else if (planSeleccionado.includes('Minecraft - Setup Intermedio')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754401";
+                } else if (planSeleccionado.includes('Minecraft - Setup Avanzado')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754402";
+                } else if (planSeleccionado.includes('Minecraft - Setup Completo')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754404";
+                } 
+                else if (planSeleccionado.includes('Roblox - Lógica Básica')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754411";
+                } else if (planSeleccionado.includes('Roblox - Desarrollo Parcial')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754413";
+                } else if (planSeleccionado.includes('Roblox - Juego Completo')) {
+                    linkPago.href = "https://kubeon.tebex.io/package/7754416";
+                }
+
+                document.getElementById('contenedor-pago').style.display = 'block';
+
             } catch (error) {
                 console.error(error);
                 alert("Hubo un error al enviar. Revisa la consola.");
-            } finally {
-                btn.innerText = originalText;
+                btn.innerText = "Enviar Solicitud";
                 btn.disabled = false;
             }
         });
